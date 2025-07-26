@@ -1,11 +1,13 @@
 
-DUNE Computing Training 2024 Update
+DUNE Computing Training for Batch jobs
 ========================================
+Batch job submission and monitoring are presented in this training.
+
+These training materials are a work in progress and are beig developed for tutorials offered in 2025.
 
 This repository holds the source code of the webpage that is rendered [here]({{ site.baseurl }}/index.html). 
 
 This training module is part of an initiative of the [DUNE Computing Consortium](https://dunescience.org/).
-
 
 When:
 
@@ -48,6 +50,13 @@ Maintainers of this GitHub space are:
 * Heidi Schellman
 
 ## Authors
+
+Lead Authors:
+
+* Ken Horner
+* Andrew McNab
+* Aaron Higuera
+* Elisabetta Pennacchio
 
 A list of contributors to the lesson can be found in [AUTHORS](AUTHORS)
 
