@@ -66,8 +66,8 @@ The past few months have seen significant changes in how DUNE (as well as other 
 First, log in to a `dunegpvm` machine . Then you will need to set up the job submission tools (`jobsub`). If you set up `dunesw` it will be included, but if not, you need to do
 
 ```bash
-mkdir -p /pnfs/dune/scratch/users/${USER}/DUNE_tutorial_may2023 # if you have not done this before
-mkdir -p /pnfs/dune/scratch/users/${USER}/may2023tutorial
+mkdir -p /pnfs/dune/scratch/users/${USER}/DUNE_tutorial_sep2025 # if you have not done this before
+mkdir -p /pnfs/dune/scratch/users/${USER}/sep2025tutorial
 ```
 Having done that, let us submit a prepared script:
 
@@ -183,8 +183,8 @@ You will have to change the last line with your own submit file instead of the p
 First, we should make a tarball. Here is what we can do (assuming you are starting from /exp/dune/app/users/username/):
 
 ```bash
-cp /exp/dune/app/users/kherner/setupmay2023tutorial-grid.sh /exp/dune/app/users/${USER}/
-cp /exp/dune/app/users/kherner/may2023tutorial/localProducts_larsoft_v09_72_01_e20_prof/setup-grid /exp/dune/app/users/${USER}/may2023tutorial/localProducts_larsoft_v09_72_01_e20_prof/setup-grid
+cp /exp/dune/app/users/kherner/setupsep2025tutorial-grid.sh /exp/dune/app/users/${USER}/
+cp /exp/dune/app/users/kherner/sep2025tutorial/localProducts_larsoft_v09_72_01_e20_prof/setup-grid /exp/dune/app/users/${USER}/sep2025tutorial/localProducts_larsoft_v09_72_01_e20_prof/setup-grid
 ```
 
 Before we continue, let's examine these files a bit. We will source the first one in our job script, and it will set up the environment for us.
@@ -192,7 +192,7 @@ Before we continue, let's examine these files a bit. We will source the first on
 ~~~
 #!/bin/bash                                                                                                                                                                                                      
 
-DIRECTORY=may2023tutorial
+DIRECTORY=sep2025tutorial
 # we cannot rely on "whoami" in a grid job. We have no idea what the local username will be.
 # Use the GRID_USER environment variable instead (set automatically by jobsub). 
 USERNAME=${GRID_USER}
@@ -213,37 +213,37 @@ Now let's look at the difference between the setup-grid script and the plain set
 Assuming you are currently in the /exp/dune/app/users/username directory:
 
 ```bash
-diff may2023tutorial/localProducts_larsoft_v09_72_01_e20_prof/setup may2023tutorial/localProducts_larsoft_v09_72_01_e20_prof/setup-grid
+diff sep2025tutorial/localProducts_larsoft_v09_72_01_e20_prof/setup sep2025tutorial/localProducts_larsoft_v09_72_01_e20_prof/setup-grid
 ```
 
 ~~~
-< setenv MRB_TOP "/exp/dune/app/users/<username>/may2023tutorial"
-< setenv MRB_TOP_BUILD "/exp/dune/app/users/<username>/may2023tutorial"
-< setenv MRB_SOURCE "/exp/dune/app/users/<username>/may2023tutorial/srcs"
-< setenv MRB_INSTALL "/exp/dune/app/users/<username>/may2023tutorial/localProducts_larsoft_v09_72_01_e20_prof"
+< setenv MRB_TOP "/exp/dune/app/users/<username>/sep2025tutorial"
+< setenv MRB_TOP_BUILD "/exp/dune/app/users/<username>/sep2025tutorial"
+< setenv MRB_SOURCE "/exp/dune/app/users/<username>/sep2025tutorial/srcs"
+< setenv MRB_INSTALL "/exp/dune/app/users/<username>/sep2025tutorial/localProducts_larsoft_v09_72_01_e20_prof"
 ---
-> setenv MRB_TOP "${INPUT_TAR_DIR_LOCAL}/may2023tutorial"
-> setenv MRB_TOP_BUILD "${INPUT_TAR_DIR_LOCAL}/may2023tutorial"
-> setenv MRB_SOURCE "${INPUT_TAR_DIR_LOCAL}/may2023tutorial/srcs"
-> setenv MRB_INSTALL "${INPUT_TAR_DIR_LOCAL}/may2023tutorial/localProducts_larsoft_v09_72_01_e20_prof"
+> setenv MRB_TOP "${INPUT_TAR_DIR_LOCAL}/sep2025tutorial"
+> setenv MRB_TOP_BUILD "${INPUT_TAR_DIR_LOCAL}/sep2025tutorial"
+> setenv MRB_SOURCE "${INPUT_TAR_DIR_LOCAL}/sep2025tutorial/srcs"
+> setenv MRB_INSTALL "${INPUT_TAR_DIR_LOCAL}/sep2025tutorial/localProducts_larsoft_v09_72_01_e20_prof"
 ~~~
 
 As you can see, we have switched from the hard-coded directories to directories defined by environment variables; the `INPUT_TAR_DIR_LOCAL` variable will be set for us (see below).
-Now, let's actually create our tar file. Again assuming you are in `/exp/dune/app/users/kherner/may2023tutorial/`:
+Now, let's actually create our tar file. Again assuming you are in `/exp/dune/app/users/kherner/sep2025tutorial/`:
 ```bash
-tar --exclude '.git' -czf may2023tutorial.tar.gz may2023tutorial/localProducts_larsoft_v09_72_01_e20_prof may2023tutorial/work setupmay2023tutorial-grid.sh
+tar --exclude '.git' -czf sep2025tutorial.tar.gz sep2025tutorial/localProducts_larsoft_v09_72_01_e20_prof sep2025tutorial/work setupsep2025tutorial-grid.sh
 ```
 Note how we have excluded the contents of ".git" directories in the various packages, since we don't need any of that in our jobs. It turns out that the .git directory can sometimes account for a substantial fraction of a package's size on disk! 
 
 Then submit another job (in the following we keep the same submit file as above):
 
 ```bash
-jobsub_submit -G dune --mail_always -N 1 --memory=2500MB --disk=2GB --expected-lifetime=3h --cpu=1 --tar_file_name=dropbox:///exp/dune/app/users/<username>/may2023tutorial.tar.gz --singularity-image /cvmfs/singularity.opensciencegrid.org/fermilab/fnal-wn-sl7:latest --append_condor_requirements='(TARGET.HAS_Singularity==true&&TARGET.HAS_CVMFS_dune_opensciencegrid_org==true&&TARGET.HAS_CVMFS_larsoft_opensciencegrid_org==true&&TARGET.CVMFS_dune_opensciencegrid_org_REVISION>=1105&&TARGET.HAS_CVMFS_fifeuser1_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser2_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser3_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser4_opensciencegrid_org==true)' -e GFAL_PLUGIN_DIR=/usr/lib64/gfal2-plugins -e GFAL_CONFIG_DIR=/etc/gfal2.d file:///exp/dune/app/users/kherner/run_may2023tutorial.sh
+jobsub_submit -G dune --mail_always -N 1 --memory=2500MB --disk=2GB --expected-lifetime=3h --cpu=1 --tar_file_name=dropbox:///exp/dune/app/users/<username>/sep2025tutorial.tar.gz --singularity-image /cvmfs/singularity.opensciencegrid.org/fermilab/fnal-wn-sl7:latest --append_condor_requirements='(TARGET.HAS_Singularity==true&&TARGET.HAS_CVMFS_dune_opensciencegrid_org==true&&TARGET.HAS_CVMFS_larsoft_opensciencegrid_org==true&&TARGET.CVMFS_dune_opensciencegrid_org_REVISION>=1105&&TARGET.HAS_CVMFS_fifeuser1_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser2_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser3_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser4_opensciencegrid_org==true)' -e GFAL_PLUGIN_DIR=/usr/lib64/gfal2-plugins -e GFAL_CONFIG_DIR=/etc/gfal2.d file:///exp/dune/app/users/kherner/run_sep2025tutorial.sh
 ```
 
 You'll see this is very similar to the previous case, but there are some new options: 
 
-* `--tar_file_name=dropbox://` automatically **copies and untars** the given tarball into a directory on the worker node, accessed via the INPUT_TAR_DIR_LOCAL environment variable in the job.  The value of INPUT_TAR_DIR_LOCAL is by default $CONDOR_DIR_INPUT/name_of_tar_file_without_extension, so if you have a tar file named e.g. may2023tutorial.tar.gz, it would be $CONDOR_DIR_INPUT/may2023tutorial.
+* `--tar_file_name=dropbox://` automatically **copies and untars** the given tarball into a directory on the worker node, accessed via the INPUT_TAR_DIR_LOCAL environment variable in the job.  The value of INPUT_TAR_DIR_LOCAL is by default $CONDOR_DIR_INPUT/name_of_tar_file_without_extension, so if you have a tar file named e.g. sep2025tutorial.tar.gz, it would be $CONDOR_DIR_INPUT/sep2025tutorial.
 * Notice that the `--append_condor_requirements` line is longer now, because we also check for the fifeuser[1-4]. opensciencegrid.org CVMFS repositories.  
 
 The submission output will look something like this:
@@ -258,7 +258,7 @@ Could not locate uploaded file on RCDS.  Will retry in 30 seconds.
 Could not locate uploaded file on RCDS.  Will retry in 30 seconds.
 Found uploaded file on RCDS.
 Transferring files to web sandbox...
-Copying file:///nashome/k/kherner/.cache/jobsub_lite/js_2023_05_24_224713_9669e535-daf9-496f-8332-c6ec8a4238d9/run_may2023tutorial.sh   [DONE]  after 0s                                                                                                                       
+Copying file:///nashome/k/kherner/.cache/jobsub_lite/js_2023_05_24_224713_9669e535-daf9-496f-8332-c6ec8a4238d9/run_sep2025tutorial.sh   [DONE]  after 0s                                                                                                                       
 Copying file:///nashome/k/kherner/.cache/jobsub_lite/js_2023_05_24_224713_9669e535-daf9-496f-8332-c6ec8a4238d9/simple.cmd   [DONE]  after 0s                                                                                                                                   
 Copying file:///nashome/k/kherner/.cache/jobsub_lite/js_2023_05_24_224713_9669e535-daf9-496f-8332-c6ec8a4238d9/simple.sh   [DONE]  after 0s                                                                                                                                    
 Submitting job(s).
