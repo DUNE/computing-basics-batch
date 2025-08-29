@@ -5,20 +5,20 @@ exercises: 0
 questions:
 - How to submit realistic grid jobs with JustIn
 objectives:  
-- Demonstrate use of JustIn for job submission with more complicated setups.
+- Demonstrate use of [justIn](https://dunejustin.fnal.gov) for job submission with more complicated setups.
 keypoints:
 - Always, always, always prestage input datasets. No exceptions.
 ---
 
-#  PLEASE USE THE NEW JUSTIN SYSTEM INSTEAD OF POMS
+#  PLEASE USE THE NEW [justIn](https://dunejustin.fnal.gov) SYSTEM INSTEAD OF POMS
 
-__The JustIn Tutorial is currently in docdb at: [JustIn Tutorial](https://docs.dunescience.org/cgi-bin/sso/RetrieveFile?docid=30145)__
+__The [justIn](https://dunejustin.fnal.gov) Tutorial is currently in docdb at: [JustIn Tutorial](https://docs.dunescience.org/cgi-bin/sso/RetrieveFile?docid=30145)__
 
-The JustIn system is describe in detail at: 
+The [justIn](https://dunejustin.fnal.gov) system is describe in detail at: 
 
-__[JustIn Home](https://justin.dune.hep.ac.uk/dashboard/)__
+__[JustIn Home](https://dunejustin.fnal.gov/dashboard/)__
 
-__[JustIn Docs](https://justin.dune.hep.ac.uk/docs/)__
+__[JustIn Docs](https://dunejustin.fnal.gov/docs/)__
 
 
 > ## Note More documentation coming soon
