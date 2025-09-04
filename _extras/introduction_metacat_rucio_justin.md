@@ -5,20 +5,20 @@ exercises: 0
 questions:
 - How to submit realistic grid jobs with JustIn
 objectives:  
-- Demonstrate use of JustIn for job submission with more complicated setups.
+- Demonstrate use of [justIn](https://dunejustin.fnal.gov) for job submission with more complicated setups.
 keypoints:
 - Always, always, always prestage input datasets. No exceptions.
 ---
 
-#  PLEASE USE THE NEW JUSTIN SYSTEM INSTEAD OF POMS
+#  PLEASE USE THE NEW [justIn](https://dunejustin.fnal.gov) SYSTEM INSTEAD OF POMS
 
-__The JustIn Tutorial is currently in docdb at: [JustIn Tutorial](https://docs.dunescience.org/cgi-bin/sso/RetrieveFile?docid=30145)__
+__The [justIn](https://dunejustin.fnal.gov) Tutorial is currently in docdb at: [JustIn Tutorial](https://docs.dunescience.org/cgi-bin/sso/RetrieveFile?docid=30145)__
 
-The JustIn system is described in detail at: 
+The [justIn](https://dunejustin.fnal.gov) system is described in detail at: 
 
-__[JustIn Home](https://justin.dune.hep.ac.uk/dashboard/)__
+__[JustIn Home](https://dunejustin.fnal.gov/dashboard/)__
 
-__[JustIn Docs](https://justin.dune.hep.ac.uk/docs/)__
+__[JustIn Docs](https://dunejustin.fnal.gov/docs/)__
 
 
 > ## Note More documentation coming soon
@@ -209,7 +209,7 @@ A given file can also be searched and visualized from the WEB interface
 
 - is the new workflow system replacing POMS
 - It can be used to process several input  files by submitting batch jobs  on the grid 
-- justIN is a workflow system that processes data by satisfying  the requirements of data location/data catalog, rapid code distribution service
+- [justIn](https://dunejustin.fnal.gov) is a workflow system that processes data by satisfying  the requirements of data location/data catalog, rapid code distribution service
 and job submission to the grid.
 
 justIN ties together:
@@ -371,7 +371,7 @@ The scary preload is to allow `xroot` to read `hdf5` files.
 $ USERF=$USER
 $ FNALURL='https://fndcadoor.fnal.gov:2880/dune/scratch/users'
 $ justinsimple-workflow --mql"files from fardet-hd:fardet-hd__fd_mc_2023a_reco2__full-reconstructed__v09_81_00d02__standard_reco2_dune10kt_nu_1x2x6__prodgenie_nu_dune10kt_1x2x6__out1__validation skip 5 limit 5 ordered " --jobscriptsubmit_ana.jobscript--rss-mb 4000 --output-pattern '*_ana_*.root:$FNALURL/$USERF"
-'You can look at your job status by using justIN dashboard https://justin.dune.hep.ac.uk/dashboard/?method=list-workflows
+'You can look at your job status by using [justIn](https://dunejustin.fnal.gov) dashboard https://dunejustin.fnal.gov/dashboard/?method=list-workflows
 
 
 
@@ -541,7 +541,7 @@ justintime
 Links
 MetacatWEB interface:    https://metacat.fnal.gov:9443/dune_meta_prod/app/auth/login
 
-justIN: https://justin.dune.hep.ac.uk/docs/
+justIN: https://dunejustin.fnal.gov/docs/
 
 Slack channels:  #workflow
 

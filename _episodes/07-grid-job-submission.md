@@ -1,5 +1,5 @@
 ---
-title: Grid Job Submission and Common Errors
+title: Jobsub Grid Job Submission and Common Errors - still 2024 version
 teaching: 65
 exercises: 0
 questions:
@@ -44,7 +44,9 @@ This lesson (07-grid-job-submission.md) was imported from the [Jan. 2023 lesson]
 
 Quiz blocks are added at the bottom of this page, and invite your review, modify, review, and additional comments.
 
-The official timetable for this training event is on the [Indico site](https://indico.fnal.gov/event/59762/timetable/#20230524).
+<!-- 
+The official timetable for this training event is on the [Indico site](https://indico.fnal.gov/event/59762/timetable/#20230524). 
+-->
 
 ## Notes on changes in the 2023/2024 versions
 
@@ -65,15 +67,18 @@ The past few months have seen significant changes in how DUNE (as well as other 
 
 First, log in to a `dunegpvm` machine . Then you will need to set up the job submission tools (`jobsub`). If you set up `dunesw` it will be included, but if not, you need to do
 
-```bash
-mkdir -p /pnfs/dune/scratch/users/${USER}/DUNE_tutorial_may2023 # if you have not done this before
-mkdir -p /pnfs/dune/scratch/users/${USER}/may2023tutorial
-```
+~~~
+mkdir -p /pnfs/dune/scratch/users/${USER}/DUNE_tutorial_sep2025 # if you have not done this before
+mkdir -p /pnfs/dune/scratch/users/${USER}/sep2025tutorial
+~~~
+{: ..language-bash}
+
 Having done that, let us submit a prepared script:
 
 ~~~
 jobsub_submit -G dune --mail_always -N 1 --memory=1000MB --disk=1GB --cpu=1 --expected-lifetime=1h  --singularity-image /cvmfs/singularity.opensciencegrid.org/fermilab/fnal-wn-sl7:latest --append_condor_requirements='(TARGET.HAS_Singularity==true&&TARGET.HAS_CVMFS_dune_opensciencegrid_org==true&&TARGET.HAS_CVMFS_larsoft_opensciencegrid_org==true&&TARGET.CVMFS_dune_opensciencegrid_org_REVISION>=1105)' -e GFAL_PLUGIN_DIR=/usr/lib64/gfal2-plugins -e GFAL_CONFIG_DIR=/etc/gfal2.d file:///exp/dune/app/users/kherner/submission_test_singularity.sh
 ~~~
+{: ..language-bash}
 
 If all goes well you should see something like this:
 
@@ -112,6 +117,7 @@ Complete the authentication at:
 No web open command defined, please copy/paste the above to any web browser
 Waiting for response in web browser
 ~~~
+{: ..output}
 
 The user code will be different of course. In this particular case, you do want to follow the instructions and copy and paste the link into your browser (can be any browser). There is a time limit on it so its best to do it right away. Always choose Fermilab as the identity provider in the menu, even if your home institution is listed. After you hit log on, you'll get a message saying you approved the access request, and then after a short delay (may be several seconds) in the terminal you will see
 
@@ -125,6 +131,7 @@ Submitting job(s)
 .
 1 job(s) submitted to cluster 57110235.
 ~~~
+{: ..output}
 
 Now, let's look at some of these options in more detail.
 
@@ -183,8 +190,8 @@ You will have to change the last line with your own submit file instead of the p
 First, we should make a tarball. Here is what we can do (assuming you are starting from /exp/dune/app/users/username/):
 
 ```bash
-cp /exp/dune/app/users/kherner/setupmay2023tutorial-grid.sh /exp/dune/app/users/${USER}/
-cp /exp/dune/app/users/kherner/may2023tutorial/localProducts_larsoft_v09_72_01_e20_prof/setup-grid /exp/dune/app/users/${USER}/may2023tutorial/localProducts_larsoft_v09_72_01_e20_prof/setup-grid
+cp /exp/dune/app/users/kherner/setupsep2025tutorial-grid.sh /exp/dune/app/users/${USER}/
+cp /exp/dune/app/users/kherner/sep2025tutorial/localProducts_larsoft_v09_72_01_e20_prof/setup-grid /exp/dune/app/users/${USER}/sep2025tutorial/localProducts_larsoft_v09_72_01_e20_prof/setup-grid
 ```
 
 Before we continue, let's examine these files a bit. We will source the first one in our job script, and it will set up the environment for us.
@@ -192,7 +199,7 @@ Before we continue, let's examine these files a bit. We will source the first on
 ~~~
 #!/bin/bash                                                                                                                                                                                                      
 
-DIRECTORY=may2023tutorial
+DIRECTORY=sep2025tutorial
 # we cannot rely on "whoami" in a grid job. We have no idea what the local username will be.
 # Use the GRID_USER environment variable instead (set automatically by jobsub). 
 USERNAME=${GRID_USER}
@@ -213,37 +220,37 @@ Now let's look at the difference between the setup-grid script and the plain set
 Assuming you are currently in the /exp/dune/app/users/username directory:
 
 ```bash
-diff may2023tutorial/localProducts_larsoft_v09_72_01_e20_prof/setup may2023tutorial/localProducts_larsoft_v09_72_01_e20_prof/setup-grid
+diff sep2025tutorial/localProducts_larsoft_v09_72_01_e20_prof/setup sep2025tutorial/localProducts_larsoft_v09_72_01_e20_prof/setup-grid
 ```
 
 ~~~
-< setenv MRB_TOP "/exp/dune/app/users/<username>/may2023tutorial"
-< setenv MRB_TOP_BUILD "/exp/dune/app/users/<username>/may2023tutorial"
-< setenv MRB_SOURCE "/exp/dune/app/users/<username>/may2023tutorial/srcs"
-< setenv MRB_INSTALL "/exp/dune/app/users/<username>/may2023tutorial/localProducts_larsoft_v09_72_01_e20_prof"
+< setenv MRB_TOP "/exp/dune/app/users/<username>/sep2025tutorial"
+< setenv MRB_TOP_BUILD "/exp/dune/app/users/<username>/sep2025tutorial"
+< setenv MRB_SOURCE "/exp/dune/app/users/<username>/sep2025tutorial/srcs"
+< setenv MRB_INSTALL "/exp/dune/app/users/<username>/sep2025tutorial/localProducts_larsoft_v09_72_01_e20_prof"
 ---
-> setenv MRB_TOP "${INPUT_TAR_DIR_LOCAL}/may2023tutorial"
-> setenv MRB_TOP_BUILD "${INPUT_TAR_DIR_LOCAL}/may2023tutorial"
-> setenv MRB_SOURCE "${INPUT_TAR_DIR_LOCAL}/may2023tutorial/srcs"
-> setenv MRB_INSTALL "${INPUT_TAR_DIR_LOCAL}/may2023tutorial/localProducts_larsoft_v09_72_01_e20_prof"
+> setenv MRB_TOP "${INPUT_TAR_DIR_LOCAL}/sep2025tutorial"
+> setenv MRB_TOP_BUILD "${INPUT_TAR_DIR_LOCAL}/sep2025tutorial"
+> setenv MRB_SOURCE "${INPUT_TAR_DIR_LOCAL}/sep2025tutorial/srcs"
+> setenv MRB_INSTALL "${INPUT_TAR_DIR_LOCAL}/sep2025tutorial/localProducts_larsoft_v09_72_01_e20_prof"
 ~~~
 
 As you can see, we have switched from the hard-coded directories to directories defined by environment variables; the `INPUT_TAR_DIR_LOCAL` variable will be set for us (see below).
-Now, let's actually create our tar file. Again assuming you are in `/exp/dune/app/users/kherner/may2023tutorial/`:
+Now, let's actually create our tar file. Again assuming you are in `/exp/dune/app/users/kherner/sep2025tutorial/`:
 ```bash
-tar --exclude '.git' -czf may2023tutorial.tar.gz may2023tutorial/localProducts_larsoft_v09_72_01_e20_prof may2023tutorial/work setupmay2023tutorial-grid.sh
+tar --exclude '.git' -czf sep2025tutorial.tar.gz sep2025tutorial/localProducts_larsoft_v09_72_01_e20_prof sep2025tutorial/work setupsep2025tutorial-grid.sh
 ```
 Note how we have excluded the contents of ".git" directories in the various packages, since we don't need any of that in our jobs. It turns out that the .git directory can sometimes account for a substantial fraction of a package's size on disk! 
 
 Then submit another job (in the following we keep the same submit file as above):
 
 ```bash
-jobsub_submit -G dune --mail_always -N 1 --memory=2500MB --disk=2GB --expected-lifetime=3h --cpu=1 --tar_file_name=dropbox:///exp/dune/app/users/<username>/may2023tutorial.tar.gz --singularity-image /cvmfs/singularity.opensciencegrid.org/fermilab/fnal-wn-sl7:latest --append_condor_requirements='(TARGET.HAS_Singularity==true&&TARGET.HAS_CVMFS_dune_opensciencegrid_org==true&&TARGET.HAS_CVMFS_larsoft_opensciencegrid_org==true&&TARGET.CVMFS_dune_opensciencegrid_org_REVISION>=1105&&TARGET.HAS_CVMFS_fifeuser1_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser2_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser3_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser4_opensciencegrid_org==true)' -e GFAL_PLUGIN_DIR=/usr/lib64/gfal2-plugins -e GFAL_CONFIG_DIR=/etc/gfal2.d file:///exp/dune/app/users/kherner/run_may2023tutorial.sh
+jobsub_submit -G dune --mail_always -N 1 --memory=2500MB --disk=2GB --expected-lifetime=3h --cpu=1 --tar_file_name=dropbox:///exp/dune/app/users/<username>/sep2025tutorial.tar.gz --singularity-image /cvmfs/singularity.opensciencegrid.org/fermilab/fnal-wn-sl7:latest --append_condor_requirements='(TARGET.HAS_Singularity==true&&TARGET.HAS_CVMFS_dune_opensciencegrid_org==true&&TARGET.HAS_CVMFS_larsoft_opensciencegrid_org==true&&TARGET.CVMFS_dune_opensciencegrid_org_REVISION>=1105&&TARGET.HAS_CVMFS_fifeuser1_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser2_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser3_opensciencegrid_org==true&&TARGET.HAS_CVMFS_fifeuser4_opensciencegrid_org==true)' -e GFAL_PLUGIN_DIR=/usr/lib64/gfal2-plugins -e GFAL_CONFIG_DIR=/etc/gfal2.d file:///exp/dune/app/users/kherner/run_sep2025tutorial.sh
 ```
 
 You'll see this is very similar to the previous case, but there are some new options: 
 
-* `--tar_file_name=dropbox://` automatically **copies and untars** the given tarball into a directory on the worker node, accessed via the INPUT_TAR_DIR_LOCAL environment variable in the job.  The value of INPUT_TAR_DIR_LOCAL is by default $CONDOR_DIR_INPUT/name_of_tar_file_without_extension, so if you have a tar file named e.g. may2023tutorial.tar.gz, it would be $CONDOR_DIR_INPUT/may2023tutorial.
+* `--tar_file_name=dropbox://` automatically **copies and untars** the given tarball into a directory on the worker node, accessed via the INPUT_TAR_DIR_LOCAL environment variable in the job.  The value of INPUT_TAR_DIR_LOCAL is by default $CONDOR_DIR_INPUT/name_of_tar_file_without_extension, so if you have a tar file named e.g. sep2025tutorial.tar.gz, it would be $CONDOR_DIR_INPUT/sep2025tutorial.
 * Notice that the `--append_condor_requirements` line is longer now, because we also check for the fifeuser[1-4]. opensciencegrid.org CVMFS repositories.  
 
 The submission output will look something like this:
@@ -258,7 +265,7 @@ Could not locate uploaded file on RCDS.  Will retry in 30 seconds.
 Could not locate uploaded file on RCDS.  Will retry in 30 seconds.
 Found uploaded file on RCDS.
 Transferring files to web sandbox...
-Copying file:///nashome/k/kherner/.cache/jobsub_lite/js_2023_05_24_224713_9669e535-daf9-496f-8332-c6ec8a4238d9/run_may2023tutorial.sh   [DONE]  after 0s                                                                                                                       
+Copying file:///nashome/k/kherner/.cache/jobsub_lite/js_2023_05_24_224713_9669e535-daf9-496f-8332-c6ec8a4238d9/run_sep2025tutorial.sh   [DONE]  after 0s                                                                                                                       
 Copying file:///nashome/k/kherner/.cache/jobsub_lite/js_2023_05_24_224713_9669e535-daf9-496f-8332-c6ec8a4238d9/simple.cmd   [DONE]  after 0s                                                                                                                                   
 Copying file:///nashome/k/kherner/.cache/jobsub_lite/js_2023_05_24_224713_9669e535-daf9-496f-8332-c6ec8a4238d9/simple.sh   [DONE]  after 0s                                                                                                                                    
 Submitting job(s).
@@ -368,6 +375,29 @@ Since the workflow was causing a systemwide disruption we immediately held all o
 
 DUNE has also created a a global glideinWMS pool similar to the CMS Global Pool that is intended to serve as a single point through which multiple job submission systems (e.g. HTCondor schedulers at sites outside of Fermilab) can have access to the same resources. Jobs using the global pool still run in the exactly the same way as those that don't. We plan to move more and more work over to the global pool in 2023 and priority access to the FermiGrid quota will eventually be given to jobs submitted to the global pool. To switch to the global pool with jobsub, it's simply a matter of adding `--global-pool dune` as an option to your submission command. The only practical difference is that your jobs will come back with IDs of the form NNNNNNN.N@dunegpschedd0X.fnal.gov instead of NNNNNNN.N@jobsub0X.fnal.gov. Again, everything else is identical, so feel free to test it out.
 
+
+## Making subsets of metacat datasets
+
+Running across very large number of files puts you at risk of system issues.  It is often much nicer to run over several smaller subsets.
+Many official metacat definitions are large data collections defined only by their properties and not really suitable for a single job.
+
+You can do the following.  Submit your jobs using the skip and limit commands.  Here 'namespace:official_dataset' describes the official dataset. 
+
+See [the basics tutorial](https://dune.github.io/computing-basics/03-data-management/index.html#official-datasets-) for information on official datasets. 
+
+~~~
+query="files from namespace:official_dataset skip 0 limit 1000"
+query="files from namespace:official_dataset skip 1000 limit 1000"
+query="files from namespace:official_dataset skip 2000 limit 1000"
+....
+~~~
+{: ..language-bash}
+
+
+
+
+<!-- 
+
 ## Making subsets of sam definitions
 
 Running across very large number of files puts you at risk of system issues.  It is often much nicer to run over several smaller subsets.
@@ -399,7 +429,7 @@ samweb create-definition $USER-mydataset-part4 “defname:mydataset limit 2000 w
 
 
 
-More on samweb can be found [here]({{ site.baseurl }}/sam-by-schellman).
+More on samweb can be found [here]({{ site.baseurl }}/sam-by-schellman). -->
 
 ## Verify Your Learning:
 

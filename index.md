@@ -10,23 +10,21 @@ latitude: "45"
 longitude: "-1"
 humandate: "2024"
 humantime: "asynchronous"
-startdate: "2024-05-20"
-enddate: "2024-12-01"
-instructor: ["Heidi Schellman","Dave Demuth","Michael Kirby","Steve Timm","Tom Junk","Ken Herner"]
+startdate: "2025-09-08"
+enddate: "2025-09-11"
+instructor: ["Heidi Schellman","Dave Demuth","Michael Kirby","Steve Timm","Tom Junk","Ken Herner","Aaron Higuera"]
 helper: ["mentor1", "mentor2"]
 email: ["schellmh@oregonstate.edu","dmdemuth@gmail.com","mkirby@bnl.gov","timm@fnal.gov","junk@fnal.gov","herner@fnal.gov"]
-collaborative_notes: "2024-05-24-dune"
+collaborative_notes: "2025-09-11-dune"
 eventbrite:
 ---
 
-This tutorial will teach you the basics of DUNE Computing. 
+This tutorial will teach you the basics of DUNE batch computing. 
 
 Instructors will engage students with hands-on lessons focused in three areas:
 
-0. Basics of logging on, getting accounts, disk spaces
-1. Data storage and management,
-2. Introduction to LArSoft
-3. How to find futher training materials for DUNE and HEP software
+1. The [justIn](https://dunejustin.fnal.gov) batch system
+2. The jobsub batch system
 
 
 Mentors will answer your questions and provide technical support.
@@ -40,31 +38,28 @@ Mentors will answer your questions and provide technical support.
 >   We recommend that participants to go through [The Unix Shell](https://swcarpentry.github.io/shell-novice/), if new to the unix command line (also known as terminal or shell).
 > 2. A computer set up so that you can log into a remote unix system at FNAL or CERN.  
 >   This will include getting DUNE computing accounts at FNAL or CERN.      
->   See [Setup]({{ page.root }}/setup.html) to do this pre-class setup.  
+>   See [Setup](http://dune.github.io/computing-basics/setup.html) to do this pre-class setup.  
 {: .prereq}
 
 By the end of this workshop, participants will know how to:
 
-* Utilize data volumes at FNAL.
-* Understand good data management practices.
-* Provide a basic overview of art and LArSoft to a new researcher.
+* submit simple jobs using the [justIn](https://dunejustin.fnal.gov) batch system
+* know some simple methods for debugging batch jobs
 
 There are additional materials provided that explain how to:
 
-* [Develop configuration files to control batch jobs]({{ site.baseurl }}/07-grid-job-submission)
-* [Use the Justin system to process data]({{ site.baseurl }}/08-submit-jobs-w-justin)
-* [Modify LArSoft modules]({{ site.baseurl }}/06-larsoft-modify-module)
+* Use the [justIn](https://dunejustin.fnal.gov) system to process data
+* [Develop configuration files to control jobsub batch jobs]({{ site.baseurl }}/07-grid-job-submission)
+
+
 
 You will need to be a DUNE Collaborator (listed member), and have a valid FNAL or CERN computing account to join the tutorial. Contact your  DUNE group leader for assistance.
 
 > ## Getting Started
 >
-> First step: follow the directions in the "[Setup](
-> {{ page.root }}/setup.html)". Once you follow the instructions; we give you an easy exercise 
+> First step: follow the directions in the "[Setup](https://dune.github.io/computing-basics/setup.html)". Once you follow the instructions; we give you an easy exercise 
 > to make sure you are good to go.
 {: .callout}
-
-Then we will proceed through the episodes - the live tutorial currently goes to episode 5. 
 
 Ask questions on [Slack](https://dunescience.slack.com/archives/C02TJDHUQPR) anytime or - during the live lessons - on the [livedoc](https://docs.google.com/document/d/1QNK-hKPqLIVaecRyg9q4QZOHNwAZgq32oHVuboG_AvQ/edit?usp=sharing).
 

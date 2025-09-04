@@ -13,7 +13,7 @@ keypoints:
 - #### `bash: setup: command not found`
 
   setup is a UPS command.  You need to be running in the Apptainer and setup the DUNE ups system - check out the instructions in [SL7 setup]
-  ({{ site.baseurl }}/sl7_setup)
+  (https://dune.github.io/computing-basics/sl7_setup)
 
 
 - #### `SyntaxError: future feature annotations is not defined` 
