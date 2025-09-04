@@ -12,9 +12,12 @@ keypoints:
 
 #  PLEASE USE THE NEW [justIn](https://dunejustin.fnal.gov) SYSTEM INSTEAD OF POMS
 
-__The [justIn](https://dunejustin.fnal.gov) Tutorial is currently in docdb at: [JustIn Tutorial](https://docs.dunescience.org/cgi-bin/sso/RetrieveFile?docid=30145)__
+__A simple [justIn](https://dunejustin.fnal.gov) Tutorial is currently in docdb at: [JustIn Tutorial](https://docs.dunescience.org/cgi-bin/sso/RetrieveFile?docid=30145)__
 
-The [justIn](https://dunejustin.fnal.gov) system is describe in detail at: 
+A more detailed tutorial is available at:
+[JustIn Docs](https://dunejustin.fnal.gov/docs/)
+
+The [justIn](https://dunejustin.fnal.gov) system is described in detail at: 
 
 __[JustIn Home](https://dunejustin.fnal.gov/dashboard/)__
 

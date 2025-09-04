@@ -48,8 +48,9 @@ By the end of this workshop, participants will know how to:
 
 There are additional materials provided that explain how to:
 
-* [Develop configuration files to control batch jobs]({{ site.baseurl }}/07-grid-job-submission)
-* [Use the [justIn](https://dunejustin.fnal.gov) system to process data]({{ site.baseurl }}/02-submit-jobs-w-justin)
+* Use the [justIn](https://dunejustin.fnal.gov) system to process data
+* [Develop configuration files to control jobsub batch jobs]({{ site.baseurl }}/07-grid-job-submission)
+
 
 
 You will need to be a DUNE Collaborator (listed member), and have a valid FNAL or CERN computing account to join the tutorial. Contact your  DUNE group leader for assistance.

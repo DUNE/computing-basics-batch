@@ -1,5 +1,5 @@
 ---
-title: Grid Job Submission and Common Errors
+title: Jobsub Grid Job Submission and Common Errors - still 2024 version
 teaching: 65
 exercises: 0
 questions:
@@ -44,7 +44,9 @@ This lesson (07-grid-job-submission.md) was imported from the [Jan. 2023 lesson]
 
 Quiz blocks are added at the bottom of this page, and invite your review, modify, review, and additional comments.
 
-The official timetable for this training event is on the [Indico site](https://indico.fnal.gov/event/59762/timetable/#20230524).
+<!-- 
+The official timetable for this training event is on the [Indico site](https://indico.fnal.gov/event/59762/timetable/#20230524). 
+-->
 
 ## Notes on changes in the 2023/2024 versions
 
@@ -65,15 +67,18 @@ The past few months have seen significant changes in how DUNE (as well as other 
 
 First, log in to a `dunegpvm` machine . Then you will need to set up the job submission tools (`jobsub`). If you set up `dunesw` it will be included, but if not, you need to do
 
-```bash
+~~~
 mkdir -p /pnfs/dune/scratch/users/${USER}/DUNE_tutorial_sep2025 # if you have not done this before
 mkdir -p /pnfs/dune/scratch/users/${USER}/sep2025tutorial
-```
+~~~
+{: ..language-bash}
+
 Having done that, let us submit a prepared script:
 
 ~~~
 jobsub_submit -G dune --mail_always -N 1 --memory=1000MB --disk=1GB --cpu=1 --expected-lifetime=1h  --singularity-image /cvmfs/singularity.opensciencegrid.org/fermilab/fnal-wn-sl7:latest --append_condor_requirements='(TARGET.HAS_Singularity==true&&TARGET.HAS_CVMFS_dune_opensciencegrid_org==true&&TARGET.HAS_CVMFS_larsoft_opensciencegrid_org==true&&TARGET.CVMFS_dune_opensciencegrid_org_REVISION>=1105)' -e GFAL_PLUGIN_DIR=/usr/lib64/gfal2-plugins -e GFAL_CONFIG_DIR=/etc/gfal2.d file:///exp/dune/app/users/kherner/submission_test_singularity.sh
 ~~~
+{: ..language-bash}
 
 If all goes well you should see something like this:
 
@@ -112,6 +117,7 @@ Complete the authentication at:
 No web open command defined, please copy/paste the above to any web browser
 Waiting for response in web browser
 ~~~
+{: ..output}
 
 The user code will be different of course. In this particular case, you do want to follow the instructions and copy and paste the link into your browser (can be any browser). There is a time limit on it so its best to do it right away. Always choose Fermilab as the identity provider in the menu, even if your home institution is listed. After you hit log on, you'll get a message saying you approved the access request, and then after a short delay (may be several seconds) in the terminal you will see
 
@@ -125,6 +131,7 @@ Submitting job(s)
 .
 1 job(s) submitted to cluster 57110235.
 ~~~
+{: ..output}
 
 Now, let's look at some of these options in more detail.
 
