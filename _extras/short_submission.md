@@ -1,5 +1,5 @@
 ---
-title: Short Submission
+title: Short submission with your own code
 ---
 
 ## this collects the sequence of steps for a batch submission with local code
@@ -22,11 +22,11 @@ copy these scripts into that top level directory
 {% include setup-grid %}
 ~~~
 
-- setup-local
+<!-- - setup-local
 
 ~~~
 {% include setup-local %}
-~~~
+~~~ -->
 
 - makercds
 
