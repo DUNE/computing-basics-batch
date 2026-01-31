@@ -29,10 +29,21 @@ EOF
 # fcl file and DUNE software version/qualifier to be used
 FCL_FILE=${FCL_FILE:-${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/my_code/fcls/my_reco.fcl}
 PROCESS_TYPE=${PROCESS_TYPE:-reco2}
-DUNE_VERSION=${DUNE_VERSION:-v09_85_00d00}
-DUNE_QUALIFIER=${DUNE_QUALIFIER:-e26:prof}
+#DUNE_VERSION=${DUNE_VERSION:-v09_85_00d00}
+#DUNE_QUALIFIER=${DUNE_QUALIFIER:-e26:prof}
 
-cd ${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}
+echo "Check environment"
+echo "DIRECTORY=$DIRECTORY"
+echo "DUNE_VERSION=$DUNE_VERSION"
+echo "DUNE_QUALIFIER=$DUNE_QUALIFIER" 
+echo "FCL_FILE=$FCL_FILE"
+echo "MQL=$MQL" 
+echo "PROCESS_TYPE=$PROCESS_TYPE"
+echo "USERF=$USERF" 
+echo "NUM_EVENTS=$NUM_EVENTS" 
+echo "INPUT_TAR_DIR_LOCAL=$INPUT_TAR_DIR_LOCAL"
+
+
 
 echo "Current working directory is `pwd`"
 
@@ -70,6 +81,7 @@ echo "localProductsdir ${localProductsdir}"
 
 echo " check that there is a setup in ${localProductsdir}"
 ls -lrt  ${localProductsdir}/setup
+ls -lrt ${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/$FCL_FILE
 source /cvmfs/dune.opensciencegrid.org/products/dune/setup_dune.sh
 export PRODUCTS="${localProductsdir}/:$PRODUCTS"
 
@@ -93,11 +105,15 @@ campaign="justIN.w${JUSTIN_WORKFLOW_ID}s${JUSTIN_STAGE_ID}"
 export LD_PRELOAD=${XROOTD_LIB}/libXrdPosixPreload.so
 echo "$LD_PRELOAD"
 
+echo "now run lar"
+
 lar -c ${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/$FCL_FILE $events_option -o $outFile "$pfn" > ${fname}_${PROCESS_TYPE}_${now}.log 2>&1
 )
 
+
+
 echo '=== Start last 1000 lines of lar log file ==='
-tail -1000 ${fname}_ana_${now}.log
+tail -1000 ${fname}_${PROCESS_TYPE}_${now}.log
 echo '=== End last 1000 lines of lar log file ==='
 
 # Subshell exits with exit code of last command

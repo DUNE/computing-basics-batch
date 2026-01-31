@@ -5,6 +5,7 @@ export DUNE_QUALIFIER=e26:prof
 export FCL_FILE=run_analyseEvents.fcl
 export MQL="files where dune.workflow['workflow_id']=3923 and core.data_tier=full-reconstructed limit 2 ordered "
 export PROCESS_TYPE=analyze 
+export DESCRIPTION="$PROCESS_TYPE using $FCL_FILE"
 export USERF=$USER
 export NUM_EVENTS=1 
 export FNALURL='https://fndcadoor.fnal.gov:2880/dune/scratch/users'
