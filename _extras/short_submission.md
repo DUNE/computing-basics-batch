@@ -16,7 +16,8 @@ export DIRECTORY=myworkarea
 
 copy these scripts into that top level directory
 
-- setup-grid
+> ## setup-grid
+{: .callout}
 
 ~~~
 {% include setup-grid %}
@@ -28,38 +29,43 @@ copy these scripts into that top level directory
 {% include setup-local %}
 ~~~ -->
 
-- makercds
+> ## makercds
+{: .callout}
 
 ~~~
 {% include makercds.sh %}
 ~~~
 
-- submit_workflow.sh
+> ## submit_workflow.sh
+{: .callout}
 
 ~~~
 {% include submit_workflow.sh %}
 ~~~
 
 
-- submit_local_code.jobscript.sh
-
+> ## submit_local_code.jobscript.sh
+{: .callout}
 ~~~
 {% include submit_local_code.jobscript.sh %}
 ~~~
 
-### modify this script (should not need to change the others)
-
-
-- choose your code version and fcl file 
-- make certain the fcl file is either in the fcl path or in `$DIRECTORY`
-- add a string `PROCESS_TYPE` that will go in your filename
-
-
-#### setup_before_submit.sh
-
+> ## setup_before_submit.sh
+{: .callout}
 ~~~
 {% include setup_before_submit.sh %}
 ~~~
+### modify one script (should not need to change the others)
+
+edit `setup_before_submit.sh` to reflect the parameters you need. 
+
+- choose your code version and fcl file (code version has to match your build)
+- *make certain the fcl file is either in the fcl path or in `$DIRECTORY`*
+- add a string `PROCESS_TYPE` that will go in your filename
+- add a description in `DESCRIPTION`
+
+
+
 
 Then run it to set things up
 
@@ -89,7 +95,7 @@ go to [justin](https://dunejustin.fnal.gov/dashboard/?method=list-workflows)
 
 to track your job.
 
-
+[internal link](/files/setup-grid)
 
 
 
