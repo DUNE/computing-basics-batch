@@ -1,5 +1,5 @@
 ---
-title: Jobsub Grid Job Submission and Common Errors - still 2024 version
+title: Jobsub Grid Job Submission and Common Errors (SPECIAL PURPOSE)
 teaching: 65
 exercises: 0
 questions:

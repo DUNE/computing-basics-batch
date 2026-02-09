@@ -1,5 +1,5 @@
 ---
-title: Jobsub Grid Job Submission and Common Errors - justIn Version
+title: justIn Grid Job Submission (UNDER CONSTRUCTION)
 teaching: 65
 exercises: 0
 questions:
@@ -18,12 +18,12 @@ keypoints:
 
 <!-- > ## Note: 
 > This section describes basic job submission. Large scale submission of jobs to read DUNE data files are described in the [next section]({{ site.baseurl }}/08-submit-jobs-w-justin/index.html). -->
-
+<!-- 
 #### Session Video
 
 This session will be captured on video a placed here after the workshop for asynchronous study.
 <!-- The session was video captured for your asynchronous review. -->
-The video from the two day version of this training in May 2022 is provided [here](https://www.youtube.com/embed/QuDxkhq64Og) as a reference.
+The video from the two day version of this training in May 2022 is provided [here](https://www.youtube.com/embed/QuDxkhq64Og) as a reference. -->
 
 <!--
 <center>
@@ -59,6 +59,9 @@ The past few months have seen significant changes in how DUNE (as well as other 
 * Multiple `--tar_file_name` options are now supported (and will be unpacked) if you need things in multiple tarballs.
 * The `-f` behavior with and without dropbox:// in front is slightly different from legacy jobsub; see the [documentation](https://fifewiki.fnal.gov/wiki/Differences_between_jobsub_lite_and_legacy_jobsub_client/server#Bug_with_-f_dropbox:.2F.2F.2Fa.2Fb.2Fc.tar) for details.
 * jobsub_lite will probably not work directly from lxplus at the moment, though work is underway to make it possible to submit batch jobs to non-FNAL schedulers. -->
+
+For now, please look at the short version of this sequence at
+[Short Submission Runthrough]({{ site.baseurl }}/short_submission)
 
 ## Submit a job
 

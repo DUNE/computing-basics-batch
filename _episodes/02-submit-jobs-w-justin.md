@@ -1,5 +1,5 @@
 ---
-title:  Submit grid jobs with JustIn
+title:  New Justin Job Submission System
 teaching: 20
 exercises: 0
 questions:
