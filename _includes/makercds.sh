@@ -1,13 +1,16 @@
 # give me the directory name as argument
+echo "----------------------------------------------------------------"
+echo "makercds.sh"
+justin get-token
 export HERE=`pwd`
 # put the tar file on a bigger disk 
 export THERE=/exp/dune/data/users/$USER/
-cd .. # go up one
-echo " make tar file"
-tar --exclude '.git' --exclude build_slf7.x86_64 -czf $THERE/$1.tar.gz $1
+date
 ls -lrt $THERE/$1.tar.gz
-echo " upload tar file to cvmfs"
+echo " upload tar file to cvmfs and store location in cvmfs.location file"
 export INPUT_TAR_DIR_LOCAL=`justin-cvmfs-upload $THERE/$1.tar.gz`
-echo $INPUT_TAR_DIR_LOCAL
-echo $INPUT_TAR_DIR_LOCAL > $1/cvmfs.location
+echo "file uploaded to $INPUT_TAR_DIR_LOCAL"
+echo $INPUT_TAR_DIR_LOCAL > $HERE/cvmfs.location
+echo "return to previous directory"
 cd $HERE
+echo "----------------------------------------------------------------"

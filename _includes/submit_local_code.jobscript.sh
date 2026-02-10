@@ -92,10 +92,14 @@ source ${localProductsdir}/setup
 mrbslp
 
 # Construct outFile from input $pfn 
-now=$(date -u +"%Y-%m-%dT_%H%M%SZ")
+now=$(date -u +"%Y%m%d%H%M%SZ")
 Ffname=`echo $pfn | awk -F/ '{print $NF}'`
 fname=`echo $Ffname | awk -F. '{print $1}'`
-outFile=${fname}_${PROCESS_TYPE}_${now}.root
+# outFile1 is artroot format
+# outFile2 is root format for analysis
+outFile1=${fname}_${PROCESS_TYPE}_${now}.root
+outFile2=${fname}_${PROCESS_TYPE}_tuple_${now}.root
+
 
 campaign="justIN.w${JUSTIN_WORKFLOW_ID}s${JUSTIN_STAGE_ID}"
 
@@ -107,7 +111,7 @@ echo "$LD_PRELOAD"
 
 echo "now run lar"
 
-lar -c ${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/$FCL_FILE $events_option -o $outFile "$pfn" > ${fname}_${PROCESS_TYPE}_${now}.log 2>&1
+lar -c ${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/$FCL_FILE $events_option -o $outFile1 -T ${outFile2} "$pfn" > ${fname}_${PROCESS_TYPE}_${now}.log 2>&1
 )
 
 

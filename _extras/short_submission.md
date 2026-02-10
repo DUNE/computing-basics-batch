@@ -29,6 +29,19 @@ copy these scripts into that top level directory
 {% include setup-local %}
 ~~~ -->
 
+> ## setup_before_submit.sh
+{: .callout}
+~~~
+{% include setup_before_submit.sh %}
+~~~
+
+> ## maketar
+{: .callout}
+
+~~~
+{% include maketar.sh %}
+~~~
+
 > ## makercds
 {: .callout}
 
@@ -50,11 +63,7 @@ copy these scripts into that top level directory
 {% include submit_local_code.jobscript.sh %}
 ~~~
 
-> ## setup_before_submit.sh
-{: .callout}
-~~~
-{% include setup_before_submit.sh %}
-~~~
+
 ### modify one script (should not need to change the others)
 
 edit `setup_before_submit.sh` to reflect the parameters you need. 
@@ -78,10 +87,11 @@ source setup_before_submit.sh
 If you have changed any scripts or code, you must redo this. 
 
 ~~~
+./maketar.sh $DIRECTORY
 ./makercds.sh $DIRECTORY
 ~~~
 
-will take a while, produce a tarball on /exp/dune/data and put the cvmfs location in cvmfs.location
+will take a while, produce a tarball on /exp/dune/data and put the cvmfs location in cvmfs.location in `$DIRECTORY`
 
 ### Submit the job
 
