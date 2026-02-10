@@ -1,6 +1,8 @@
 # give me the directory name as argument
 echo "----------------------------------------------------------------"
 echo "makercds.sh"
+echo "first ensure you have a justin token"
+justin time
 justin get-token
 export HERE=`pwd`
 # put the tar file on a bigger disk 
