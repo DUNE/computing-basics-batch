@@ -80,7 +80,7 @@ echo "localProductsdir ${localProductsdir}"
 # seems to require the right name for the setup script 
 
 echo " check that there is a setup in ${localProductsdir}"
-ls -lrt  ${localProductsdir}/setup
+ls -lrt  ${localProductsdir}/setup-grid
 ls -lrt ${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/$FCL_FILE
 source /cvmfs/dune.opensciencegrid.org/products/dune/setup_dune.sh
 export PRODUCTS="${localProductsdir}/:$PRODUCTS"
@@ -88,7 +88,7 @@ export PRODUCTS="${localProductsdir}/:$PRODUCTS"
 # Then we can set up our local products
 setup duneana "$DUNE_VERSION" -q "$DUNE_QUALIFIER"
 setup dunesw "$DUNE_VERSION" -q "$DUNE_QUALIFIER"
-source ${localProductsdir}/setup
+source ${localProductsdir}/setup-grid
 mrbslp
 
 # Construct outFile from input $pfn 

@@ -14,54 +14,22 @@ need to have a name for it as you will be making a tarball
 export DIRECTORY=myworkarea
 ~~~
 
-copy these scripts into that top level directory
-
-> ## setup-grid
-{: .callout}
-
-~~~
-{% include setup-grid %}
-~~~
-
-<!-- - setup-local
-
-~~~
-{% include setup-local %}
-~~~ -->
-
-> ## setup_before_submit.sh
-{: .callout}
-~~~
-{% include setup_before_submit.sh %}
-~~~
-
-> ## maketar
-{: .callout}
-
-~~~
-{% include maketar.sh %}
-~~~
-
-> ## makercds
-{: .callout}
-
-~~~
-{% include makercds.sh %}
-~~~
-
-> ## submit_workflow.sh
-{: .callout}
-
-~~~
-{% include submit_workflow.sh %}
-~~~
+### copy these scripts into that top level directory
 
 
-> ## submit_local_code.jobscript.sh
-{: .callout}
-~~~
-{% include submit_local_code.jobscript.sh %}
-~~~
+[setup-grid](https://github.com/hschellman/computing-basics-batch-devel/blob/gh-pages/_includes/setup-grid) (should not need to modify)
+
+[maketar.sh](https://github.com/hschellman/computing-basics-batch-devel/blob/gh-pages/_includes/maketar.sh) 
+(should not need to modify)
+
+[makerdcs.sh](https://github.com/hschellman/computing-basics-batch-devel/blob/gh-pages/_includes/makerdcs.sh) (should not need to modify)
+
+[setup_before_submit.sh](https://github.com/hschellman/computing-basics-batch-devel/blob/gh-pages/_includes/setup_before_submit.sh) (customize for your code)
+
+[submit_workflow.sh](https://github.com/hschellman/computing-basics-batch-devel/blob/gh-pages/_includes/submit_workflow.sh) (modify running time and memory)
+
+[submit_local_code.jobscript.sh](https://github.com/hschellman/computing-basics-batch-devel/blob/gh-pages/_includes/submit_local_code.jobscript.sh) (may need to modify if expert)
+
 
 
 ### modify one script (should not need to change the others)
@@ -94,6 +62,8 @@ If you have changed any scripts or code, you must redo this.
 will take a while, produce a tarball on /exp/dune/data and put the cvmfs location in cvmfs.location in `$DIRECTORY`
 
 ### Submit the job
+
+[submit_workflow.sh](https://github.com/hschellman/computing-basics-batch-devel/blob/gh-pages/_includes/submit_workflow.sh)
 
 ~~~
 ./submit_workflow.sh
