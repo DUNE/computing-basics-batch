@@ -16,6 +16,7 @@ export DIRECTORY=myworkarea
 
 ### copy these scripts into that top level directory
 
+(You can access a tarball with them all [here](https://github.com/hschellman/computing-basics-batch-devel/blob/gh-pages/files/usefulcode.tar) )
 
 [setup-grid](https://github.com/hschellman/computing-basics-batch-devel/blob/gh-pages/_includes/setup-grid) (should not need to modify)
 
@@ -39,9 +40,9 @@ export DIRECTORY=myworkarea
 
 
 
-### modify one script (should not need to change the others)
+### modify two script (should not need to change the others)
 
-edit `setup_before_submit.sh` and `job_config.sh` to reflect the parameters you need.  
+edit `setup_before_submit.sh` if you change code versions and `job_config.sh` if you change more temporary things like fcl files . 
 
 - choose your code version (code version has to match your build)
 - *make certain the fcl file is either in the fcl path or in `$DIRECTORY`*
@@ -51,10 +52,10 @@ edit `setup_before_submit.sh` and `job_config.sh` to reflect the parameters you 
 Then run it to set things up
 
 ~~~
-source setup_before_submit.sh
+source setup_before_submit.sh # sets up larsoft
 ~~~
 
-### from DIRECTORY make a tarball and put in rcds
+### from $DIRECTORY make a tarball and put in rcds
 
 If you have changed any scripts or code, you must redo this. 
 
@@ -63,7 +64,7 @@ If you have changed any scripts or code, you must redo this.
 ./makercds.sh $DIRECTORY
 ~~~
 
-will take a while, produce a tarball on /exp/dune/data and put the cvmfs location in cvmfs.location in `$DIRECTORY`
+will take a while, produce a tarball on `/exp/dune/data/users` and put the cvmfs location in cvmfs.location in `$DIRECTORY`
 
 Then edit `job_config.sh` to reflect the # of events you want and other run-time parameters.
 
