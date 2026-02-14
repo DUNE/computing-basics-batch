@@ -2,7 +2,7 @@
 title: Short submission with your own code
 ---
 
-## this collects the sequence of steps for a batch submission with local code
+## this collects the sequence of steps for a batch submission with local code which produces both an artroot and root file
 
 ### in your top level mrb directory
 
@@ -24,9 +24,16 @@ export DIRECTORY=myworkarea
 
 [makerdcs.sh](https://github.com/hschellman/computing-basics-batch-devel/blob/gh-pages/_includes/makerdcs.sh) (should not need to modify)
 
-[setup_before_submit.sh](https://github.com/hschellman/computing-basics-batch-devel/blob/gh-pages/_includes/setup_before_submit.sh) (customize for your code)
+[job_config.sh](https://github.com/hschellman/computing-basics-batch-devel/blob/gh-pages/_includes/job_config.sh)  (you modify this to choose things like MQL query, number of events..)
+
+[setup_before_submit.sh](https://github.com/hschellman/computing-basics-batch-devel/blob/gh-pages/_includes/setup_before_submit.sh) (customize versions for your code)
 
 [submit_workflow.sh](https://github.com/hschellman/computing-basics-batch-devel/blob/gh-pages/_includes/submit_workflow.sh) (modify running time and memory)
+
+[test_workflow.sh](https://github.com/hschellman/computing-basics-batch-devel/blob/gh-pages/_includes/test_workflow.sh) (script to do interactive tests of your jobscript)
+
+
+[extractor_new.py](https://github.com/hschellman/computing-basics-batch-devel/blob/gh-pages/_includes/extractor_new.py) (this makes metadata for your files)
 
 [submit_local_code.jobscript.sh](https://github.com/hschellman/computing-basics-batch-devel/blob/gh-pages/_includes/submit_local_code.jobscript.sh) (may need to modify if expert)
 
@@ -34,15 +41,12 @@ export DIRECTORY=myworkarea
 
 ### modify one script (should not need to change the others)
 
-edit `setup_before_submit.sh` to reflect the parameters you need. 
+edit `setup_before_submit.sh` and `job_config.sh` to reflect the parameters you need.  
 
-- choose your code version and fcl file (code version has to match your build)
+- choose your code version (code version has to match your build)
 - *make certain the fcl file is either in the fcl path or in `$DIRECTORY`*
-- add a string `PROCESS_TYPE` that will go in your filename
+- add a string `APP_NAME` that will go in your filename
 - add a description in `DESCRIPTION`
-
-
-
 
 Then run it to set things up
 
@@ -60,6 +64,8 @@ If you have changed any scripts or code, you must redo this.
 ~~~
 
 will take a while, produce a tarball on /exp/dune/data and put the cvmfs location in cvmfs.location in `$DIRECTORY`
+
+Then edit `job_config.sh` to reflect the # of events you want and other run-time parameters.
 
 ### Submit the job
 
