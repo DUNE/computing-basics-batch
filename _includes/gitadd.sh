@@ -11,3 +11,4 @@ setup-grid \
 submit_workflow.sh \
 > ../files/usefulcode.tar
 git add ../files/usefulcode.tar
+git add ../_extras/short_submission.md

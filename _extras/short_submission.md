@@ -16,7 +16,11 @@ export DIRECTORY=myworkarea
 
 ### copy these scripts into that top level directory
 
-(You can access a tarball with them all [here](https://github.com/hschellman/computing-basics-batch-devel/blob/gh-pages/files/usefulcode.tar) )
+You can access a tarball with them all [here](https://github.com/hschellman/computing-basics-batch-devel/blob/gh-pages/files/usefulcode.tar). 
+
+Download that tarball into the top level directory for your build and `tar xBf usefulcode.tar` to get the code.
+
+Here are links to each of the scripts. 
 
 [setup-grid](https://github.com/hschellman/computing-basics-batch-devel/blob/gh-pages/_includes/setup-grid) (should not need to modify)
 
