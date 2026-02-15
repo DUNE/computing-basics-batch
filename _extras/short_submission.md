@@ -44,13 +44,13 @@ Here are links to each of the scripts.
 
 
 
-### modify two script (should not need to change the others)
+### modify two scripts (should not need to change the others)
 
 edit `setup_before_submit.sh` if you change code versions and `job_config.sh` if you change more temporary things like fcl files . 
 
 - choose your code version (code version has to match your build)
 - *make certain the fcl file is either in the fcl path or in `$DIRECTORY`*
-- add a string `APP_NAME` that will go in your filename
+- add a string `APP_TAG` that will go in your filename
 - add a description in `DESCRIPTION`
 
 Then run it to set things up

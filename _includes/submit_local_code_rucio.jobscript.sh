@@ -18,17 +18,17 @@ Use this command to create the workflow:
 justin simple-workflow \
 --mql "$MQL" \
 --jobscript submit_local_code.jobscript.sh --rss-mb 4000 \
---output-pattern "*.root:${USER}-output" --env APP_NAME=${APP_NAME} --env DIRECTORY=${DIRECTORY} --scope $NAMESPACE --lifetime 30 
+--output-pattern "*.root:${USER}-output" --env APP_TAG=${APP_TAG} --env DIRECTORY=${DIRECTORY} --scope $NAMESPACE --lifetime 30 
 
 
 The following optional environment variables can be set when creating the
-workflow/stage: FCL_FILE, APP_NAME, NUM_EVENTS, DUNE_VERSION, DUNE_QUALIFIER 
+workflow/stage: FCL_FILE, APP_TAG, NUM_EVENTS, DUNE_VERSION, DUNE_QUALIFIER 
 
 EOF
 
 # fcl file and DUNE software version/qualifier to be used
 FCL_FILE=${FCL_FILE:-${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/my_code/fcls/my_reco.fcl}
-APP_NAME=${APP_NAME:-reco2}
+APP_TAG=${APP_TAG:-reco2}
 #DUNE_VERSION=${DUNE_VERSION:-v09_85_00d00}
 #DUNE_QUALIFIER=${DUNE_QUALIFIER:-e26:prof}
 
@@ -38,7 +38,7 @@ echo "DUNE_VERSION=$DUNE_VERSION"
 echo "DUNE_QUALIFIER=$DUNE_QUALIFIER" 
 echo "FCL_FILE=$FCL_FILE"
 echo "MQL=$MQL" 
-echo "APP_NAME=$APP_NAME"
+echo "APP_TAG=$APP_TAG"
 echo "USERF=$USERF" 
 echo "NUM_EVENTS=$NUM_EVENTS" 
 echo "INPUT_TAR_DIR_LOCAL=$INPUT_TAR_DIR_LOCAL"
@@ -101,8 +101,8 @@ Ffname=`echo $pfn | awk -F/ '{print $NF}'`
 fname=`echo $Ffname | awk -F. '{print $1}'`
 # outFile1 is artroot format
 # outFile2 is root format for analysis
-outFile1=${fname}_${APP_NAME}_${now}.root
-outFile2=${fname}_${APP_NAME}_tuple_${now}.root
+outFile1=${fname}_${APP_TAG}_${now}.root
+outFile2=${fname}_${APP_TAG}_tuple_${now}.root
 
 
 campaign="justIN.w${JUSTIN_WORKFLOW_ID}s${JUSTIN_STAGE_ID}"
@@ -115,7 +115,7 @@ echo "$LD_PRELOAD"
 
 echo "now run lar"
 
-lar -c ${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/$FCL_FILE $events_option -o ${outFile1} -T ${outFile2} "$pfn" > ${fname}_${APP_NAME}_${now}.log 2>&1
+lar -c ${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/$FCL_FILE $events_option -o ${outFile1} -T ${outFile2} "$pfn" > ${fname}_${APP_TAG}_${now}.log 2>&1
 )
 # Subshell exits with exit code of last command
 larExit=$?
@@ -124,7 +124,7 @@ echo "lar exit code $larExit"
 
 
 echo '=== Start last 1000 lines of lar log file ==='
-tail -1000 ${fname}_${APP_NAME}_${now}.log
+tail -1000 ${fname}_${APP_TAG}_${now}.log
 echo '=== End last 1000 lines of lar log file ==='
 
 
@@ -139,11 +139,11 @@ fi
 
 # make metadata for both files 
 
-${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/extractor_prod.py --infile ${outFile1}  --appfamily duneana --appname ${APP_NAME} --appversion  ${DUNE_VERSION}  --no_crc > ${outFile1}.ext.json  
+${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/extractor_prod.py --infile ${outFile1}  --appfamily duneana --appname ${APP_TAG} --appversion  ${DUNE_VERSION}  --no_crc > ${outFile1}.ext.json  
 
 file1Exit=$?
 
-${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/extractor_prod.py --infile ${outFile2}  --appfamily larsoft --appname ${APP_NAME} --appversion  ${DUNE_VERSION}  --no_crc  --input_json ${DIRECTORY}/pdvd_input.json > ${outFile1}.ext.json  
+${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/extractor_prod.py --infile ${outFile2}  --appfamily larsoft --appname ${APP_TAG} --appversion  ${DUNE_VERSION}  --no_crc  --input_json ${DIRECTORY}/pdvd_input.json > ${outFile1}.ext.json  
 
 file2Exit=$?
 

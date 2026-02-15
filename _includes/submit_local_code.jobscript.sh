@@ -20,7 +20,7 @@ Use this command to create the workflow:
 justin simple-workflow \
 --mql "$MQL" \
 --jobscript submit_local_code.jobscript.sh --rss-mb 4000 \
- --output-pattern "*.root:${FNALURL}/${USERF}" --output-pattern "*.root.json:${FNALURL}/${USERF}" --env APP_NAME=${APP_NAME} --env DIRECTORY=${DIRECTORY} --scope $NAMESPACE --lifetime 30 --env INPUT_TAR_DIR_LOCAL=${INPUT_TAR_DIR_LOCAL} --env DUNE_VERSION=${DUNE_VERSION} --env DUNE_QUALIFIER=${DUNE_QUALIFIER} --env FCL_FILE=${FCL_FILE} --env NUM_EVENTS=${NUM_EVENTS} --env USERF=${USERF} --env NAMESPACE=${NAMESPACE} --description "${DESCRIPTION}" 
+ --output-pattern "*.root:${FNALURL}/${USERF}" --output-pattern "*.root.json:${FNALURL}/${USERF}" --env APP_TAG=${APP_TAG} --env DIRECTORY=${DIRECTORY} --scope $NAMESPACE --lifetime 30 --env INPUT_TAR_DIR_LOCAL=${INPUT_TAR_DIR_LOCAL} --env DUNE_VERSION=${DUNE_VERSION} --env DUNE_QUALIFIER=${DUNE_QUALIFIER} --env FCL_FILE=${FCL_FILE} --env NUM_EVENTS=${NUM_EVENTS} --env USERF=${USERF} --env NAMESPACE=${NAMESPACE} --description "${DESCRIPTION}" 
 
 see job_config.sh for explanations
 
@@ -28,7 +28,7 @@ EOF
 
 # fcl file and DUNE software version/qualifier to be used
 FCL_FILE=${FCL_FILE:-${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/my_code/fcls/my_reco.fcl}
-APP_NAME=${APP_NAME:-unknown}
+APP_TAG=${APP_TAG:-unknown}
 #DUNE_VERSION=${DUNE_VERSION:-v09_85_00d00}
 #DUNE_QUALIFIER=${DUNE_QUALIFIER:-e26:prof}
 
@@ -39,7 +39,7 @@ echo "DUNE_VERSION=$DUNE_VERSION"
 echo "DUNE_QUALIFIER=$DUNE_QUALIFIER" 
 echo "FCL_FILE=$FCL_FILE"
 echo "MQL=$MQL" 
-echo "APP_NAME=$APP_NAME"
+echo "APP_TAG=$APP_TAG"
 echo "USERF=$USERF" 
 echo "NUM_EVENTS=$NUM_EVENTS" 
 echo "INPUT_TAR_DIR_LOCAL=$INPUT_TAR_DIR_LOCAL"
@@ -109,8 +109,8 @@ Ffname=`echo $pfn | awk -F/ '{print $NF}'`
 fname=`echo $Ffname | awk -F. '{print $1}'`
 # outFile1 is artroot format
 # outFile2 is root format for analysis
-export outFile1=${fname}_${APP_NAME}_${now}.root
-export outFile2=${fname}_${APP_NAME}_tuple_${now}.root
+export outFile1=${fname}_${APP_TAG}_${now}.root
+export outFile2=${fname}_${APP_TAG}_tuple_${now}.root
 
 # echo "make $outFile1"
 campaign="justIN.w${JUSTIN_WORKFLOW_ID}s${JUSTIN_STAGE_ID}"
@@ -127,9 +127,9 @@ export LD_PRELOAD=${XROOTD_LIB}/libXrdPosixPreload.so
 
 echo "-----  now run lar ------"
 
-echo "lar -c ${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/$FCL_FILE $events_option -o ${outFile1} -T ${outFile2} "$pfn" > ${fname}_${APP_NAME}_${now}.log 2>&1"
+echo "lar -c ${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/$FCL_FILE $events_option -o ${outFile1} -T ${outFile2} "$pfn" > ${fname}_${APP_TAG}_${now}.log 2>&1"
 
-lar -c ${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/$FCL_FILE $events_option -o ${outFile1} -T ${outFile2} "$pfn" > ${fname}_${APP_NAME}_${now}.log 2>&1
+lar -c ${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/$FCL_FILE $events_option -o ${outFile1} -T ${outFile2} "$pfn" > ${fname}_${APP_TAG}_${now}.log 2>&1
 )
 
 larExit=$?
@@ -139,7 +139,7 @@ larExit=$?
 echo "lar exit code $larExit"
 
 echo '=== Start last 1000 lines of lar log file ==='
-tail -1000 ${fname}_${APP_NAME}_${now}.log
+tail -1000 ${fname}_${APP_TAG}_${now}.log
 echo '=== End last 1000 lines of lar log file ==='
 
 
@@ -149,9 +149,9 @@ echo "--------make metadata---------"
 
 #sam_metadata_dumper ${outFile1}
 
-echo "python ${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/extractor_new.py --infile=${outFile1} --appversion=$DUNE_VERSION --appname=${APP_NAME} --appfamily=larsoft --no_crc --inputDidsFile=justin-input-dids.txt --data_tier='full-reconstructed' --file_format='artroot' --fcl_file=${FCL_FILE}  --namespace=${NAMESPACE} # > $outFile1.json"
+echo "python ${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/extractor_new.py --infile=${outFile1} --appversion=$DUNE_VERSION --appname=${APP_TAG} --appfamily=larsoft --no_crc --inputDidsFile=justin-input-dids.txt --data_tier='full-reconstructed' --file_format='artroot' --fcl_file=${FCL_FILE}  --namespace=${NAMESPACE} # > $outFile1.json"
 
-python ${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/extractor_new.py --infile=$outFile1 --appversion=$DUNE_VERSION --appname=${APP_NAME}  --appfamily=larsoft --no_crc --inputDidsFile=justin-input-dids.txt  --data_tier='full-reconstructed' --file_format='artroot' --fcl_file=${FCL_FILE} --namespace=${NAMESPACE} #> $outFile1.json
+python ${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/extractor_new.py --infile=$outFile1 --appversion=$DUNE_VERSION --appname=${APP_TAG}  --appfamily=larsoft --no_crc --inputDidsFile=justin-input-dids.txt  --data_tier='full-reconstructed' --file_format='artroot' --fcl_file=${FCL_FILE} --namespace=${NAMESPACE} #> $outFile1.json
 
 file1Exit=$?
 
@@ -162,9 +162,9 @@ echo "------------ non-artroot metadata -----------"
 
 oldjson=${outFile1}.json
 
-echo " python ${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/extractor_new.py --infile=$outFile2 --appversion=$DUNE_VERSION  --appname=${APP_NAME} --appfamily=larsoft --no_crc --inputDidsFile=justin-input-dids.txt  --data_tier='root-tuple' --file_format='root' --fcl_file=${FCL_FILE} --no_extract --input_json=${PWD}/${oldjson}  --namespace=${NAMESPACE} # > ${outFile2}.json"
+echo " python ${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/extractor_new.py --infile=$outFile2 --appversion=$DUNE_VERSION  --appname=${APP_TAG} --appfamily=larsoft --no_crc --inputDidsFile=justin-input-dids.txt  --data_tier='root-tuple' --file_format='root' --fcl_file=${FCL_FILE} --no_extract --input_json=${PWD}/${oldjson}  --namespace=${NAMESPACE} # > ${outFile2}.json"
 
-python ${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/extractor_new.py --infile=$outFile2 --appversion=$DUNE_VERSION   --appname=${APP_NAME}  --appfamily=larsoft --no_crc --inputDidsFile=justin-input-dids.txt  --data_tier='root-tuple' --file_format='root' --fcl_file=${FCL_FILE} --no_extract --input_json=${PWD}/${oldjson} --namespace=${NAMESPACE} # > ${outFile2}.json
+python ${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/extractor_new.py --infile=$outFile2 --appversion=$DUNE_VERSION   --appname=${APP_TAG}  --appfamily=larsoft --no_crc --inputDidsFile=justin-input-dids.txt  --data_tier='root-tuple' --file_format='root' --fcl_file=${FCL_FILE} --no_extract --input_json=${PWD}/${oldjson} --namespace=${NAMESPACE} # > ${outFile2}.json
 
 file2Exit=$?
 

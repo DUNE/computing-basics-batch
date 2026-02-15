@@ -9,7 +9,7 @@ echo "DUNE_VERSION=$DUNE_VERSION"
 echo "DUNE_QUALIFIER=$DUNE_QUALIFIER" 
 echo "FCL_FILE=$FCL_FILE"
 echo "MQL=$MQL" 
-echo "APP_NAME=$APP_NAME"
+echo "APP_TAG=$APP_TAG"
 echo "USERF=$USERF" 
 echo "NUM_EVENTS=$NUM_EVENTS" 
 echo "DESCRIPTION=$DESCRIPTION"
@@ -22,5 +22,5 @@ echo " go up one directory "
 cd ..
 justin-test-jobscript \
 --mql "$MQL" \
---jobscript $DIRECTORY/submit_local_code.jobscript.sh --env PROCESS_TYPE=${PROCESS_TYPE} --env DIRECTORY=${DIRECTORY}  --env INPUT_TAR_DIR_LOCAL=${INPUT_TAR_DIR_LOCAL} --env DUNE_VERSION=${DUNE_VERSION} --env DUNE_QUALIFIER=${DUNE_QUALIFIER} --env FCL_FILE=${FCL_FILE} --env NUM_EVENTS=${NUM_EVENTS} --env USERF=${USER} --env APP_NAME=${APP_NAME} --env NAMESPACE=${NAMESPACE} 
+--jobscript $DIRECTORY/submit_local_code.jobscript.sh --env PROCESS_TYPE=${PROCESS_TYPE} --env DIRECTORY=${DIRECTORY}  --env INPUT_TAR_DIR_LOCAL=${INPUT_TAR_DIR_LOCAL} --env DUNE_VERSION=${DUNE_VERSION} --env DUNE_QUALIFIER=${DUNE_QUALIFIER} --env FCL_FILE=${FCL_FILE} --env NUM_EVENTS=${NUM_EVENTS} --env USERF=${USER} --env APP_TAG=${APP_TAG} --env NAMESPACE=${NAMESPACE} 
 cd $HERE
