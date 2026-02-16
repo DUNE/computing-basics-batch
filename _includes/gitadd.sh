@@ -1,5 +1,5 @@
 git add *.sh *.py setup-grid DUNE*json
-tar cBf - \
+tar --no-xattrs -cf ../files/usefulcode.tar \
 extractor_new.py \
 gitadd.sh \
 job_config.sh \
@@ -8,7 +8,7 @@ maketar.sh \
 setup_before_submit.sh \
 submit_local_code.jobscript.sh \
 setup-grid \
-submit_workflow.sh \
-> ../files/usefulcode.tar
+submit_workflow.sh 
+#> ../files/usefulcode.tar
 git add ../files/usefulcode.tar
 git add ../_extras/short_submission.md
