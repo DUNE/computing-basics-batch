@@ -8,7 +8,7 @@ import json
 import abc
 import datetime
 
-DEBUG=True
+DEBUG=False
 
 import argparse
   
@@ -218,11 +218,12 @@ class expMetaData(MetaData):
 
 		# Other fields where the key or value requires minor conversion.
             elif mdkey == 'runs':
-                runsSubruns = set()
-                runs = set()
-                for run, subrun in mdart.pop("runs", []):
-                    runs.add(run)
-                    runsSubruns.add(100000 * run + subrun)
+                runsSubruns = []
+                runs = []
+                print (mdart['runs'])
+                for run, subrun, runtype in mdart.pop("runs", []):
+                    if run not in runs: runs.append(run)
+                    if subrun not in runsSubruns: runsSubruns.append(100000 * run + subrun)
                 md['core.runs'] = runs
                 md['core.runs_subruns'] = runsSubruns
             
@@ -346,12 +347,12 @@ def main():
     argparser.add_argument('--appversion',help='application version for  metadata',type=str)
     argparser.add_argument('--appfamily',help='application family for  metadata',type=str)
     argparser.add_argument('--file_type',help='file_type (mc or detector)',type=str)
-    argparser.add_argument('--file_format',help='file_format (root, artroot ..)',type=str,required=True)
+    argparser.add_argument('--file_format',help='file_format (root, artroot ..)',type=str)
     argparser.add_argument('--run_type',help='run_type - (fardet-hd, iceberg ...)',type=str)
     argparser.add_argument('--campaign',help='Value for dune.campaign for  metadata',type=str)
     argparser.add_argument('--data_stream',help='Value for data_stream for metadata',type=str)
-    argparser.add_argument('--data_tier',help='Value for data_tier for metadata',type=str,required=True)
-    argparser.add_argument('--fcl_file',type=str,help="fcl file name",required=True)
+    argparser.add_argument('--data_tier',help='Value for data_tier for metadata',type=str)
+    argparser.add_argument('--fcl_file',type=str,help="fcl file name", default="unknown")
     argparser.add_argument('--requestid',help='Value for dune.requestid for  metadata',type=str)
     #argparser.add_argument('--set_processed',help='Set for parent file as processed in  metadata',action="store_true")
     argparser.add_argument('--strip_parents',help='Do not include the file\'s parents in  metadata for declaration',action="store_true")
@@ -377,21 +378,7 @@ def main():
             mddict['metadata']={}
             print ("EXTRACTOR: building metadata from parent and args as no artroot dump available")
         # If --input_json is supplied, open that dict now and add it to the output json
-        if args.input_json != None:
-            if os.path.exists(args.input_json):
-                try:
-                    arbjson = json.load(open(args.input_json,'r'))
-                    #print ("EXTRACTOR: arbjson",arbjson)
-                    arbjson.pop('name')
-                    arbjson.pop('namespace')
-                    for key in list(arbjson.keys()):
-                        mddict[key] = arbjson[key]
-                except:
-                    print('Error loading input json file.',args.input_json)
-                    
-            else:
-                print('warning, could not open the input json file', args.input_json)
-                
+                        
 
         if args.appname != None:
             mddict['metadata']['core.application.name'] = args.appname
@@ -456,13 +443,39 @@ def main():
                         print ("EXTRACTOR: inheriting " + key + " from parent file " + thedid)
         print ("EXTRACTOR: setting namespace for output",args.namespace)
         mddict['namespace']=args.namespace
+
+
+        if args.input_json != None:
+            if os.path.exists(args.input_json):
+                try:
+                    arbjson = json.load(open(args.input_json,'r'))
+                    print ("EXTRACTOR: arbjson",arbjson)
+                    #arbjson.pop('name')
+                    #arbjson.pop('namespace')
+                    if DEBUG: "got here"
+                    for key,val in arbjson["metadata"].items():
+                    
+                        if DEBUG: print (key, val)
+                        newval = os.path.expandvars(val)
+                        if DEBUG: print (newval)
+                        if key in mddict["metadata"]:
+                            print ("EXTRACTOR: overriding ",key,mddict["metadata"][key],"with", newval, "from json file" )
+                        mddict["metadata"][key] = newval
+                except:
+                    print('Error loading input json file.',args.input_json)
+                    
+            else:
+                print('warning, could not open the input json file', args.input_json)
+
     except TypeError:
         print('You have not implemented a defineMetaData function by providing an experiment.')
         print('No metadata keys will be saved')
         raise
 #    mdtext = json.dumps(expSpecificMetadata.getmetadata(), indent=2, sort_keys=True)
-    mdtext = json.dumps(mddict, indent=2, sort_keys=True)
-
+    
+    if DEBUG: 
+        mdtext = json.dumps(mddict, indent=2, sort_keys=True)
+        print(mdtext)
     # if args.declare:
     #     ih.declareFile(mdtext)
 

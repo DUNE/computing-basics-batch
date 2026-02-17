@@ -8,3 +8,4 @@ export USERF=${USER} # make certain the grid knows who your are
 export NUM_EVENTS=-1 # process them all
 export FNALURL='https://fndcadoor.fnal.gov:2880/dune/scratch/users' # sends output to scratch
 export NAMESPACE="usertests" # don't change this unless doing production
+
