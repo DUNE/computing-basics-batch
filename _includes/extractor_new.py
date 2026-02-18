@@ -374,11 +374,30 @@ def main():
         else:
             mddict = {}
             mddict['name']=os.path.basename(args.infile)
-
+            mddict['size'] = os.path.getsize(args.infile)
+            mddict['created_by'] = os.environ['USERF']
             mddict['metadata']={}
             print ("EXTRACTOR: building metadata from parent and args as no artroot dump available")
         # If --input_json is supplied, open that dict now and add it to the output json
+        if args.input_json != None:
+            if os.path.exists(args.input_json):
+                try:
+                    arbjson = json.load(open(args.input_json,'r'))
+                    if DEBUG: print ("EXTRACTOR: arbjson",arbjson)
+                    
+                    for key,newval in arbjson["metadata"].items():
                         
+                        if key in mddict["metadata"]:
+                            if DEBUG: print ("EXTRACTOR: overriding ",key,mddict["metadata"][key],"with", newval, "from json file" )
+                        else:
+                            if DEBUG: print ("EXTRACTOR: adding ",key, newval, "from json file" )
+
+                        mddict["metadata"][key] = newval
+                except:
+                    print('Error loading input json file.',args.input_json)
+                    
+            else:
+                print('warning, could not open the input json file', args.input_json)                
 
         if args.appname != None:
             mddict['metadata']['core.application.name'] = args.appname
@@ -445,27 +464,7 @@ def main():
         mddict['namespace']=args.namespace
 
 
-        if args.input_json != None:
-            if os.path.exists(args.input_json):
-                try:
-                    arbjson = json.load(open(args.input_json,'r'))
-                    print ("EXTRACTOR: arbjson",arbjson)
-                    #arbjson.pop('name')
-                    #arbjson.pop('namespace')
-                    if DEBUG: "got here"
-                    for key,val in arbjson["metadata"].items():
-                    
-                        if DEBUG: print (key, val)
-                        newval = os.path.expandvars(val)
-                        if DEBUG: print (newval)
-                        if key in mddict["metadata"]:
-                            print ("EXTRACTOR: overriding ",key,mddict["metadata"][key],"with", newval, "from json file" )
-                        mddict["metadata"][key] = newval
-                except:
-                    print('Error loading input json file.',args.input_json)
-                    
-            else:
-                print('warning, could not open the input json file', args.input_json)
+
 
     except TypeError:
         print('You have not implemented a defineMetaData function by providing an experiment.')

@@ -6,11 +6,19 @@ export HERE=`pwd`
 export THERE=/exp/dune/data/users/$USER/
 cd .. # go up one from current directory
 date
-echo " make tar file"
-tar --exclude '.git' --exclude build_slf7.x86_64  -cf $THERE/$1.tar $1
-date
-echo " gzip step "
-gzip -f $THERE/$1.tar
-date
-echo " tar file is at $THERE/$1.tar.gz"
-echo "----------------------------------------------------------------"
+if [ "$1" == "" ] ; then
+    echo "need to enter the directory name and be in that directory"
+else 
+    echo " make tar file from $1, excluding build_slf7... "
+    tarname=$(basename $1)
+    echo "$tarname"
+    tar --exclude '.git' --exclude build_slf7.x86_64  -cf ${THERE}/${tarname}.tar $1
+    date
+    echo " gzip step "
+    gzip -f $THERE/${tarname}.tar
+    date
+    echo " tar file is at $THERE/${tarname}.tar.gz"
+    cd $HERE
+    echo "----------------------------------------------------------------"
+fi
+

@@ -133,6 +133,8 @@ lar -c ${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/$FCL_FILE $events_option -o ${outFile
 )
 
 larExit=$?
+
+
 # Subshell exits with exit code of last command
 
 
@@ -149,9 +151,11 @@ echo "--------make metadata---------"
 
 #sam_metadata_dumper ${outFile1}
 
-echo "python ${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/extractor_new.py --infile=${outFile1} --appversion=$DUNE_VERSION --appname=${APP_TAG} --appfamily=larsoft --no_crc --inputDidsFile=justin-input-dids.txt --data_tier='full-reconstructed' --file_format='artroot' --fcl_file=${FCL_FILE}  --namespace=${NAMESPACE} # > $outFile1.json"
+FCL_FILE_NAME=$(basename $FCL_FILE)
 
-python ${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/extractor_new.py --infile=$outFile1 --appversion=$DUNE_VERSION --appname=${APP_TAG}  --appfamily=larsoft --no_crc --inputDidsFile=justin-input-dids.txt  --data_tier='full-reconstructed' --file_format='artroot' --fcl_file=${FCL_FILE} --namespace=${NAMESPACE} #> $outFile1.json
+echo "python ${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/extractor_new.py --infile=${outFile1} --appversion=$DUNE_VERSION --appname=${APP_TAG} --appfamily=larsoft --no_crc --inputDidsFile=justin-input-dids.txt --data_tier='full-reconstructed' --file_format='artroot' --fcl_file=${FCL_FILE_NAME}  --namespace=${NAMESPACE} # > $outFile1.json"
+
+python ${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/extractor_new.py --infile=$outFile1 --appversion=$DUNE_VERSION --appname=${APP_TAG}  --appfamily=larsoft --no_crc --inputDidsFile=justin-input-dids.txt  --data_tier='full-reconstructed' --file_format='artroot' --fcl_file=${FCL_FILE_NAME} --namespace=${NAMESPACE} #> $outFile1.json
 
 file1Exit=$?
 
@@ -162,9 +166,9 @@ echo "------------ non-artroot metadata -----------"
 
 oldjson=${outFile1}.json
 
-echo " python ${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/extractor_new.py --infile=$outFile2 --appversion=$DUNE_VERSION  --appname=${APP_TAG} --appfamily=larsoft --no_crc --inputDidsFile=justin-input-dids.txt  --data_tier='root-tuple' --file_format='root' --fcl_file=${FCL_FILE} --no_extract --input_json=${PWD}/${oldjson}  --namespace=${NAMESPACE} # > ${outFile2}.json"
+echo " python ${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/extractor_new.py --infile=$outFile2 --appversion=$DUNE_VERSION  --appname=${APP_TAG} --appfamily=larsoft --no_crc --inputDidsFile=justin-input-dids.txt  --data_tier='root-tuple' --file_format='root' --fcl_file=${FCL_FILE_NAME} --no_extract --input_json=${PWD}/${oldjson}  --namespace=${NAMESPACE} # > ${outFile2}.json"
 
-python ${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/extractor_new.py --infile=$outFile2 --appversion=$DUNE_VERSION   --appname=${APP_TAG}  --appfamily=larsoft --no_crc --inputDidsFile=justin-input-dids.txt  --data_tier='root-tuple' --file_format='root' --fcl_file=${FCL_FILE} --no_extract --input_json=${PWD}/${oldjson} --namespace=${NAMESPACE} # > ${outFile2}.json
+python ${INPUT_TAR_DIR_LOCAL}/${DIRECTORY}/extractor_new.py --infile=$outFile2 --appversion=$DUNE_VERSION   --appname=${APP_TAG}  --appfamily=larsoft --no_crc --inputDidsFile=justin-input-dids.txt  --data_tier='root-tuple' --file_format='root' --fcl_file=${FCL_FILE_NAME} --no_extract --input_json=${PWD}/${oldjson} --namespace=${NAMESPACE} # > ${outFile2}.json
 
 file2Exit=$?
 
