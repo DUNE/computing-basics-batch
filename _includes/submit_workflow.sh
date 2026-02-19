@@ -16,7 +16,7 @@ echo "DESCRIPTION=$DESCRIPTION"
 echo "INPUT_TAR_DIR_LOCAL=$INPUT_TAR_DIR_LOCAL"
 echo "NAMESPACE=${NAMESPACE}"
 
-if test -e "./${FCL_FILE}"; 
+if test -e "./${FCL_FILE}"; then
     echo "---- do the submission ----"
     justin simple-workflow \
     --mql "$MQL" \
