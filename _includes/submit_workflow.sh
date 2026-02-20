@@ -3,6 +3,8 @@ export INPUT_TAR_DIR_LOCAL=`cat cvmfs.location`
 
 source job_config.sh # pick up the configuration
 
+# this sends output to scratch
+
 echo "---- check the configuration ----"
 echo "DIRECTORY=$DIRECTORY"
 echo "DUNE_VERSION=$DUNE_VERSION"
@@ -21,7 +23,7 @@ if test -e "./${FCL_FILE}"; then
     justin simple-workflow \
     --mql "$MQL" \
     --jobscript submit_local_code.jobscript.sh --rss-mb 4000 \
-    --output-pattern "*.root:${FNALURL}/${USERF}" --output-pattern "*.root.json:${FNALURL}/${USERF}" --env APP_TAG=${APP_TAG} --env DIRECTORY=${DIRECTORY} --scope ${NAMESPACE} --lifetime 30 --env INPUT_TAR_DIR_LOCAL=${INPUT_TAR_DIR_LOCAL} --env DUNE_VERSION=${DUNE_VERSION} --env DUNE_QUALIFIER=${DUNE_QUALIFIER} --env FCL_FILE=${FCL_FILE} --env NUM_EVENTS=${NUM_EVENTS} --env USERF=${USERF} --env NAMESPACE=${NAMESPACE} --description "${DESCRIPTION}" 
+    --output-pattern "*.root:${FNALURL}/${USERF}" --output-pattern "*.root.json:${FNALURL}/${USERF}" --env APP_TAG=${APP_TAG} --env DIRECTORY=${DIRECTORY} --scope ${NAMESPACE} --lifetime 700 --env INPUT_TAR_DIR_LOCAL=${INPUT_TAR_DIR_LOCAL} --env DUNE_VERSION=${DUNE_VERSION} --env DUNE_QUALIFIER=${DUNE_QUALIFIER} --env FCL_FILE=${FCL_FILE} --env NUM_EVENTS=${NUM_EVENTS} --env USERF=${USERF} --env NAMESPACE=${NAMESPACE} --description "${DESCRIPTION}" 
 else
      echo "FCL_FILE must be in $DIRECTORY for now"
 fi
