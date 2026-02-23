@@ -23,7 +23,7 @@ This tutorial will teach you the basics of DUNE batch computing.
 
 Instructors will engage students with hands-on lessons focused in three areas:
 
-1. The [justIn](https://dunejustin.fnal.gov) batch system
+1. The [justIN](https://dunejustin.fnal.gov) batch system
 2. The jobsub batch system
 
 

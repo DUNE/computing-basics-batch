@@ -104,7 +104,28 @@ If you have changed any scripts or code, you must redo this.
 
 will take a while, produce a tarball on `/exp/dune/data/users/$USER/` and put the cvmfs location in cvmfs.location in `$DIRECTORY`
 
+### Configure your job with job_config.sh
+
 Then edit `job_config.sh` to reflect the # of events you want and other run-time parameters.
+
+#### Details of job_config.sh
+
+Here is what is in job_config.sh
+~~~
+{% include job_config.sh %}
+~~~
+
+- `FCL_FILE`= the top level fcl file - assumes it is in DIRECTORY or in the `PHICL_FILE_PATH`
+- `OUTPUT_DATA_TIER1` data_tier for artroot output (full-reconstructed, ...)
+- `OUTPUT_DATA_TIER2` data_tier for root output - normally plain root-tuple
+- `MQL` Metacat query that you wish to run over
+- `APP_TAG` this is a tag that goes into the output filename, like reco2, ana ...
+- `DESCRIPTION` the jobname that shows up in justIN
+- `USERF`  make certain the grid knows who your are without overwriting whatever internal `USER` it has
+- `NUM_EVENTS`  the `-n` argument of larsoft
+- `FNALURL` sends output to subdirectories of your area on scratch
+- `NAMESPACE`  rucio/metacat namespace for your output, normally `usertests` or possibly your username or physics group unless you are doing production. 
+
 
 ### Test your jobscript interactively
 
@@ -140,9 +161,3 @@ You should get a workflow number back
 go to [justin](https://dunejustin.fnal.gov/dashboard/?method=list-workflows)
 
 to track your job.
-
-[internal link](/files/setup-grid)
-
-
-
-
