@@ -3,7 +3,7 @@ title: Jobsub Grid Job Submission and Common Errors (SPECIAL PURPOSE)
 teaching: 65
 exercises: 0
 questions:
-- How to submit grid jobs?
+- How to submit grid jobs using jobsub?
 objectives:
 - Submit a basic batchjob and understand what's happening behind the scenes
 - Monitor the job and look at its outputs
@@ -18,7 +18,7 @@ keypoints:
 ---
 
 > ## Note: 
-> This section describes basic job submission. Large scale submission of jobs to read DUNE data files are described in the [next section]({{ site.baseurl }}/08-submit-jobs-w-justin/index.html).
+> This section describes basic job submission using the older jobsubs system. Large scale submission of jobs to read DUNE data files are described in the [previous section]({{ site.baseurl }}/02-justin-job-submission/index.html).
 
 #### Session Video
 
