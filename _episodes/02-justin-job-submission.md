@@ -13,7 +13,6 @@ keypoints:
 - Send test jobs after creating new workflows or making changes to existing ones. If things don't work, don't blindly resubmit and expect things to magically work the next time.
 - Only copy what you need in input tar files. In particular, avoid copying log files, .git directories, temporary files, etc. from interactive areas.
 - Take care to follow best practices when setting up input and output file locations.
-- Always, always, always prestage input datasets. No exceptions.
 ---
 
 <!-- > ## Note: 
