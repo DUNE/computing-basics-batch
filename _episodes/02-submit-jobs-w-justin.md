@@ -1,27 +1,27 @@
 ---
-title:  Submit grid jobs with JustIn
+title:  New justIN  Job Submission System
 teaching: 20
 exercises: 0
 questions:
-- How to submit realistic grid jobs with JustIn
+- How to submit realistic grid jobs with justIN 
 objectives:  
-- Demonstrate use of [justIn](https://dunejustin.fnal.gov) for job submission with more complicated setups.
+- Demonstrate use of [justIN](https://dunejustin.fnal.gov) for job submission with more complicated setups.
 keypoints:
 - Always, always, always prestage input datasets. No exceptions.
 ---
 
-#  PLEASE USE THE NEW [justIn](https://dunejustin.fnal.gov) SYSTEM INSTEAD OF POMS
+#  PLEASE USE THE NEW [justIN](https://dunejustin.fnal.gov) SYSTEM INSTEAD OF POMS
 
-__A simple [justIn](https://dunejustin.fnal.gov) Tutorial is currently in docdb at: [JustIn Tutorial](https://docs.dunescience.org/cgi-bin/sso/RetrieveFile?docid=30145)__
+__A simple [justIN](https://dunejustin.fnal.gov) Tutorial is currently in docdb at: [justIN Tutorial](https://docs.dunescience.org/cgi-bin/sso/RetrieveFile?docid=30145)__
 
 A more detailed tutorial is available at:
-[JustIn Docs](https://dunejustin.fnal.gov/docs/)
+[justIN Docs](https://dunejustin.fnal.gov/docs/)
 
-The [justIn](https://dunejustin.fnal.gov) system is described in detail at: 
+The [justIN](https://dunejustin.fnal.gov) system is described in detail at: 
 
-__[JustIn Home](https://dunejustin.fnal.gov/dashboard/)__
+__[justIN Home](https://dunejustIN .fnal.gov/dashboard/)__
 
-__[JustIn Docs](https://dunejustin.fnal.gov/docs/)__
+__[justIN Docs](https://dunejustin.fnal.gov/docs/)__
 
 
 > ## Note More documentation coming soon
