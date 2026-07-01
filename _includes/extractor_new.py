@@ -14,6 +14,21 @@ import argparse
   
 from metacat.webapi import MetaCatClient
 
+'''very simple checksum in metacat format'''
+import zlib
+from io import BytesIO 
+
+    
+# version that does it in chunks.    
+def Adler32_chunk(file_path, chunk_size=8192):
+    checksum = 1  # Adler-32 state must be initialized to 1 (not 0)
+    
+    with open(file_path, "rb") as f:
+        while chunk := f.read(chunk_size):
+            checksum = zlib.adler32(chunk, checksum)
+            
+    return "%08x" % checksum
+
 mc_client = MetaCatClient(os.getenv("METACAT_SERVER_URL"))
 
 
@@ -212,7 +227,8 @@ class expMetaData(MetaData):
                 mdparents = []
                 if not args.strip_parents:
                     for parent in mdval:
-                        parent_dict = {'name': parent,'namespace':'unknown'}
+                        print ("EXTRACTOR: adding parent",parent," assuming same namespace",args.namespace)
+                        parent_dict = {'name': parent,'namespace':args.namespace}
                         mdparents.append(parent_dict)
                     topmd['parents'] = mdparents
 
@@ -314,7 +330,10 @@ class expMetaData(MetaData):
                     md['core.'+mdkey] = mdart[mdkey]
         
 	# Make the other meta data field parameters				
-        topmd['created_by'] = os.environ['USERF']
+        if "USERF" in os.environ:
+            topmd['created_by'] = os.environ['USERF']
+        else:
+            topmd['created_by'] = os.environ['USER']
         topmd['name'] = self.inputfile.split("/")[-1]
         if 'file_size' in md0:
             topmd['size'] = md0['file_size']
@@ -337,6 +356,38 @@ class expMetaData(MetaData):
         jobt = self.get_job(proc)
         mdart = self.mdart_gen(jobt)
         return self.md_gen(mdart, md0)	
+
+def getfileinfo(filename):
+    ''' get info even if file is remote'''
+    if "root:" in filename:
+        # use xrdcp commands to get file info the hard way
+        command = f"xrdadler32 {filename} > checksum.txt"
+        os.system(command)
+        checksum = open("checksum.txt").read().strip()
+        os.system("rm checksum.txt")
+        filesystem = filename.split("/pnfs/")[0]
+        localname = "/pnfs/"+filename.split("/pnfs/")[1]
+        command = f"xrdfs {filesystem} stat {localname} > filestats.txt"
+        os.system(command)
+        fileinfo = open("filestats.txt").readlines()
+    
+        create_time = 0
+        for line in fileinfo:
+            if "Size" in line:
+                size = int(line.split("Size:")[1].strip())
+            # if "MTime" in line:
+            #     mtime = line.split("MTime:")[1].strip()
+            #     create_time = time2unix(mtime)
+        os.system("rm filestats.txt")
+        # end of xrd excursion
+    else:
+        # local file system
+        checksum = Adler32_chunk(file_path=filename)
+        size = os.path.getsize(filename)
+        # mtime = os.path.getmtime(filename)
+        # #print (mtime)
+        # create_time = mtime
+    return checksum, size
 
 def main():
 
@@ -366,6 +417,8 @@ def main():
     global args
     args = argparser.parse_args()
 
+    checksum, size = getfileinfo(args.infile)  
+    
     try:
 #        expSpecificMetadata = expMetaData(os.environ['SAM_EXPERIMENT'], str(sys.argv[1]))
         expSpecificMetadata = expMetaData('dune', args.infile)
@@ -375,7 +428,10 @@ def main():
             mddict = {}
             mddict['name']=os.path.basename(args.infile)
             mddict['size'] = os.path.getsize(args.infile)
-            mddict['created_by'] = os.environ['USERF']
+            if "USERF" in os.environ:
+                mddict['created_by'] = os.environ['USERF']
+            else:
+                mddict['created_by'] = os.environ['USER']
             mddict['metadata']={}
             print ("EXTRACTOR: building metadata from parent and args as no artroot dump available")
         # If --input_json is supplied, open that dict now and add it to the output json
