@@ -3,19 +3,19 @@ DUNE Computing Training for Batch jobs
 ========================================
 Batch job submission and monitoring are presented in this training.
 
-These training materials are a work in progress and are beig developed for tutorials offered in 2025.
+These training materials are a work in progress and are beig developed for tutorials offered in 2026.
 
 This repository holds the source code of the webpage that is rendered [here]({{ site.baseurl }}/index.html). 
 
 This training module is part of an initiative of the [DUNE Computing Consortium](https://dunescience.org/).
 
-When:
+You may want to start with the [computing-basics](https://dune.github.io/computing-basics)
 
-2024 revisions to online version
+## When do live versions happen
 
-Live versions are delivered 1-2 times/year but this document can also be worked through on your own. 
+Live versions are delivered 1-2 times/year. 
 
-Learn the basics of DUNE computing:  storage spaces, data management, LArSoft, grid job submission
+But you can work through the materials at any time on your own.
 
 ### Live sessions
 
